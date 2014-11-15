@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in ruby-bison.gemspec
+# Specify your gem's dependencies in bison.gemspec
 gemspec

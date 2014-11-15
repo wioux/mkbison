@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ruby-bison/version'
+require 'bison/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruby-bison"
-  spec.version       = RubyBison::VERSION
+  spec.name          = "bison"
+  spec.version       = Bison::VERSION
   spec.authors       = ["Peter Woo"]
   spec.email         = ["petersnowdonwoo@gmail.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rake-compiler"
 end
