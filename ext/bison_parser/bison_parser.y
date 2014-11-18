@@ -108,11 +108,26 @@ sequence:
 %%
 
 static VALUE cBisonParser;
+static VALUE cBisonParserTokens;
 
 static VALUE bison_parser_parse(VALUE);
 
 void Init_bison_parser(void) {
-  cBisonParser = rb_const_get(rb_cObject, rb_intern("BisonParser"));
+  cBisonParser = rb_define_class("BisonParser", rb_cObject);
+  cBisonParserTokens = rb_define_module_under(cBisonParser, "Tokens");
+
+  rb_define_const(cBisonParserTokens, "IDENTIFIER", INT2FIX(IDENTIFIER));
+  rb_define_const(cBisonParserTokens, "STRING", INT2FIX(STRING));
+  rb_define_const(cBisonParserTokens, "COLON", INT2FIX(COLON));
+  rb_define_const(cBisonParserTokens, "SEMICOLON", INT2FIX(SEMICOLON));
+  rb_define_const(cBisonParserTokens, "LBRACK", INT2FIX(LBRACK));
+  rb_define_const(cBisonParserTokens, "RBRACK", INT2FIX(RBRACK));
+  rb_define_const(cBisonParserTokens, "PIPE", INT2FIX(PIPE));
+  rb_define_const(cBisonParserTokens, "HASH", INT2FIX(HASH));
+  rb_define_const(cBisonParserTokens, "DOUBLE_HASH", INT2FIX(DOUBLE_HASH));
+  rb_define_const(cBisonParserTokens, "KW_TOKEN", INT2FIX(KW_TOKEN));
+  rb_define_const(cBisonParserTokens, "ACTIONS", INT2FIX(ACTIONS));
+
   rb_define_method(cBisonParser, "parse", bison_parser_parse, 0);
 }
 

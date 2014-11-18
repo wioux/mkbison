@@ -38,18 +38,6 @@ module Bison
       out.puts("end")
     end
 
-    def print_tokens_module(out=$stdout)
-      out.puts("class #{name}")
-      out.puts("  module Tokens")
-      
-      tokens.each_with_index do |token, i|
-        out.puts("    #{token} = #{300+i}")
-      end
-
-      out.puts("  end")
-      out.puts("end")
-    end
-
     def print_actions_module(out=$stdout)
       out.puts("class #{name}")
       out.puts("  module Actions")
@@ -123,11 +111,21 @@ module Bison
 
       out.puts <<-EOF
 static VALUE c#{name};
+static VALUE c#{name}Tokens;
 
 static VALUE #{uname}_parse(VALUE);
 
 void Init_#{uname}(void) {
-  c#{name} = rb_const_get(rb_cObject, rb_intern("#{name}"));
+  c#{name} = rb_define_class("#{name}", rb_cObject);
+  c#{name}Tokens = rb_define_module_under(c#{name}, "Tokens");
+EOF
+      out.puts
+      tokens.each do |token|
+        out.puts(%(  rb_define_const(c#{name}Tokens, "#{token}", INT2FIX(#{token}));))
+      end
+      out.puts
+
+      out.puts <<-EOF
   rb_define_method(c#{name}, "parse", #{uname}_parse, 0);
 }
 

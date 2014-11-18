@@ -48,17 +48,15 @@ FileUtils.mkdir_p(extdir)
 
 bison_file = File.open("#{extdir}/#{underscore(options.name)}.y", 'w')
 extconf_file = File.open("#{extdir}/extconf.rb", 'w')
-tokens_file = File.open("#{libdir}/tokens.rb", 'w')
 actions_file = File.open("#{libdir}/actions.rb", 'w')
 base_file = File.open("#{libdir}/base.rb", 'w')
 
 bison.print_base_module(base_file)
-bison.print_tokens_module(tokens_file)
 bison.print_actions_module(actions_file)
 bison.print_bison(bison_file)
 bison.print_extconf(extconf_file)
 
-[base_file, tokens_file, actions_file, bison_file, extconf_file].each(&:close)
+[base_file, actions_file, bison_file, extconf_file].each(&:close)
 
 unless File.exist?("#{libdir}.rb")
   ruby_file = File.open("#{libdir}.rb", 'w')

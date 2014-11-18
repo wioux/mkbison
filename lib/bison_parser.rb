@@ -88,6 +88,5 @@ class BisonParser
 end
 
 require 'bison_parser/base'
-require 'bison_parser/tokens'
 require 'bison_parser/actions'
 require 'bison_parser/bison_parser'
