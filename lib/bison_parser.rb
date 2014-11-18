@@ -1,5 +1,5 @@
 class BisonParser
-  attr_accessor :lex_value, :section, :parse_result
+  attr_accessor :lex_value, :section, :result
 
   def error(msg, row, col)
     abort("#{row}.#{col}: #{msg}")
@@ -50,6 +50,12 @@ class BisonParser
       while (c = io.read(1))
         break if c == '}'
         action << c
+        if c == "\n"
+          self.row += 1
+          self.col = 0
+        else
+          self.col += 1
+        end
       end
       self.lex_value = action
       return Tokens::ACTIONS
@@ -59,6 +65,7 @@ class BisonParser
       string = c
       while (c = io.read(1)) && c =~ /\w/
         string << c
+        self.col += 1
       end
 
       io.ungetc(c) if c

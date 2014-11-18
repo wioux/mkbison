@@ -4,8 +4,6 @@
 %token COLON
 %token SEMICOLON
 %token PIPE
-%token LCURLY
-%token RCURLY
 %token HASH
 %token DOUBLE_HASH
 %token KW_TOKEN

@@ -34,8 +34,10 @@ grammar_file or abort(opts.help)
 options.name or abort(opts.help)
 options.output or abort(opts.help)
 
-bison = BisonParser.new(grammar_file).parse.parse_result
+bison = BisonParser.new(grammar_file).parse
 abort unless bison
+
+bison = bison.result
 
 bison.name = options.name
 libdir = "#{options.output}/lib/#{underscore(options.name)}"

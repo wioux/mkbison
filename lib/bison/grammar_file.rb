@@ -54,7 +54,7 @@ module Bison
       out.puts("class #{name}")
       out.puts("  module Actions")
 
-      rules.values.flatten.select(&:action).each_with_index do |rule, i|
+      rules.map(&:components).flatten.select(&:action).each_with_index do |rule, i|
         out.puts unless i.zero?
         out.puts("    def #{rule.action_name}(#{rule.tags.values.join(', ')})")
         out.puts("      #{rule.action.strip}")
@@ -99,7 +99,7 @@ module Bison
         out.puts("#{rule.name}:")
         rule.components.each_with_index do |seq, i|
           out.puts("|") unless i.zero?
-          seq.each do |e|
+          seq.elements.each do |e|
             case e
             when Bison::Nonterminal
               out.print("  #{e.name}")
