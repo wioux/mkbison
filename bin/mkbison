@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'bison'
+require 'fileutils'
+require 'optparse'
+require 'ostruct'
+
+def underscore(name)
+  name.gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+end
+
+options = OpenStruct.new
+
+opts = OptionParser.new do |opts|
+  opts.banner += ' grammar_file'
+
+  opts.on('-n NAME', '--name', 'Class name for the resulting parser') do |name|
+    options.name = name.strip
+  end
+
+  opts.on('-o DIR', '--output', 'Path to the output directory') do |outdir|
+    options.output = outdir
+  end
+end
+
+opts.parse!
+
+grammar_file = ARGV.shift
+
+grammar_file or abort(opts.help)
+options.name or abort(opts.help)
+options.output or abort(opts.help)
+
+bison = Bison::File.new(grammar_file).parse
+abort unless bison
+
+bison.name = options.name
+libdir = "#{options.output}/lib/#{underscore(options.name)}"
+extdir = "#{options.output}/ext/#{underscore(options.name)}"
+
+FileUtils.mkdir_p(libdir)
+FileUtils.mkdir_p(extdir)
+
+bison_file = File.open("#{extdir}/#{underscore(options.name)}.y", 'w')
+extconf_file = File.open("#{extdir}/extconf.rb", 'w')
+tokens_file = File.open("#{libdir}/tokens.rb", 'w')
+actions_file = File.open("#{libdir}/actions.rb", 'w')
+base_file = File.open("#{libdir}/base.rb", 'w')
+
+bison.print_base_module(base_file)
+bison.print_tokens_module(tokens_file)
+bison.print_actions_module(actions_file)
+bison.print_bison(bison_file)
+bison.print_extconf(extconf_file)
+
+[base_file, tokens_file, actions_file, bison_file, extconf_file].each(&:close)
+
+unless File.exist?("#{libdir}.rb")
+  ruby_file = File.open("#{libdir}.rb", 'w')
+  bison.print_class(ruby_file)
+  ruby_file.close
+end
+
+system('bison', '-o', "#{extdir}/#{underscore(options.name)}.c", bison_file.path)

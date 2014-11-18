@@ -38,5 +38,5 @@ VALUE bison_file_parse(VALUE self) {
   parser.rb_production = cBisonProduction;
   parser.rb_nonterminal = cBisonNonterminal;
 
-  return yyparse(&parser) ? Qnil : Qtrue;
+  return yyparse(&parser) ? Qnil : self;
 }

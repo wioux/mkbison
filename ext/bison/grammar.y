@@ -1,15 +1,15 @@
 
-%token IDENTIFIER
-%token STRING
-%token COLON
-%token SEMICOLON
-%token PIPE
-%token LCURLY
-%token RCURLY
-%token HASH
-%token DOUBLE_HASH
-%token KW_TOKEN
-%token ACTIONS
+%token IDENTIFIER	300
+%token STRING		301
+%token COLON		302
+%token SEMICOLON	303
+%token PIPE		304
+%token LCURLY		305
+%token RCURLY		306
+%token HASH		307
+%token DOUBLE_HASH	308
+%token KW_TOKEN		309
+%token ACTIONS		310
 
 %define api.pure true
 %define parse.error verbose
@@ -31,7 +31,12 @@ void yyerror(YYLTYPE *, BisonFile *, const char *);
 %%
 
 grammar_file :
-  token_list DOUBLE_HASH grammar_rules;
+  token_list DOUBLE_HASH grammar_rules optional_code;
+
+optional_code :
+  /* empty */
+|
+  DOUBLE_HASH ACTIONS;
 
 token_list :
   /* empty */
@@ -79,9 +84,10 @@ components:
 component:
   production
 |
-  production action
+  production ACTIONS
   {
     $$ = $1;
+    rb_funcall($$, rb_intern("action="), 1, $2);
   }
 ;
 
@@ -98,21 +104,21 @@ production:
     rb_funcall($1, rb_intern("push"), 1, $2);
   }
 |
+  production IDENTIFIER COLON IDENTIFIER
+  {
+    $$ = $1;
+    $2 = rb_funcall(parser->rb_nonterminal, rb_intern("new"), 2, $4, $2);
+    rb_funcall($1, rb_intern("push"), 1, $2);
+  }
+|
   production STRING
   {
     $$ = $1;
     rb_funcall($1, rb_intern("push"), 1, $2);
   }
-
-;
-
-action:
-  LCURLY ACTIONS RCURLY
 ;
 
 %%
-
-#include <ctype.h>
 
 void yyerror(YYLTYPE *loc, BisonFile *parser, const char *msg) {
   fprintf(stderr, "(%d, %d):\t%s\n", loc->first_line, loc->first_column, msg);
@@ -129,69 +135,25 @@ void yyerror(YYLTYPE *loc, BisonFile *parser, const char *msg) {
 
 
 int yylex(YYSTYPE *lval, YYLTYPE *lloc, BisonFile *parser) {
-  int i, c, n, peak;
-  char strvalue[128] = {0};
-  char strpeak[sizeof("token")] = {0};
-  FILE *input = parser->handle;
-
-  *lval = Qnil;
-
- skip_space:
-  while ((c = fgetc(input)) == ' ' || c == '\t')
-    ++lloc->last_column;
-
-  if (c == '#')
-    while ((c = fgetc(input)) != EOF && c != '\n')
-      ++lloc->last_column;
-
-  if (c == EOF)
-    RETURN_TOKEN(0);
-
-  if (c == '\n') {
-    ++lloc->last_line;
-    lloc->last_column = 0;
-    goto skip_space;
-  }
-
-  /* space is skipped */
+  VALUE value, vtok, vrow, vcol;
 
   lloc->first_line = lloc->last_line;
   lloc->first_column = lloc->last_column;
-  peak = fgetc(input);
-  ungetc(peak, input);
 
-  switch(c) {
-  case ':':
-    RETURN_TOKEN(COLON);
-  case ';':
-    RETURN_TOKEN(SEMICOLON);
-  case '|':
-    RETURN_TOKEN(PIPE);
-  case '{':
-    RETURN_TOKEN(LCURLY);
-  case '}':
-    RETURN_TOKEN(RCURLY);
-  case '%':
-    if (peak == '%') {
-      fgetc(input);
-      RETURN_TOKEN(DOUBLE_HASH);
-    }
-    RETURN_TOKEN(HASH);
+  vtok = rb_funcall(parser->rb_object, rb_intern("lex"), 0);
+  vrow = rb_funcall(parser->rb_object, rb_intern("row"), 0);
+  vcol = rb_funcall(parser->rb_object, rb_intern("col"), 0);
+  value = rb_funcall(parser->rb_object, rb_intern("lex_value"), 0);
+
+  lloc->last_line = FIX2INT(vrow);
+  lloc->last_column = FIX2INT(vcol);
+
+  if (vtok == Qnil) {
+    *lval = Qnil;
+    return 0;
   }
+  
+  *lval = value;
 
-  if (isalpha(c)) {
-    // TODO: length check
-    strvalue[i = 0] = c;
-    while (isalpha(c = fgetc(input)))
-      strvalue[++i] = c;
-    ungetc(c, input);
-
-    if (!strcmp(strvalue, "token"))
-      RETURN_TOKEN(KW_TOKEN);
-
-    *lval = rb_str_new2(strvalue);
-    RETURN_TOKEN(IDENTIFIER);
-  }
-
-  RETURN_TOKEN(0);
+  return FIX2INT(vtok);
 }
