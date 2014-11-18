@@ -45,6 +45,10 @@ class BisonParser
         return Tokens::DOUBLE_HASH
       end
       return Tokens::HASH
+    when '['
+      return Tokens::LBRACK
+    when ']'
+      return Tokens::RBRACK
     when '{'
       action = ''
       while (c = io.read(1))

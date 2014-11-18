@@ -4,10 +4,12 @@ class BisonParser
     STRING = 301
     COLON = 302
     SEMICOLON = 303
-    PIPE = 304
-    HASH = 305
-    DOUBLE_HASH = 306
-    KW_TOKEN = 307
-    ACTIONS = 308
+    LBRACK = 304
+    RBRACK = 305
+    PIPE = 306
+    HASH = 307
+    DOUBLE_HASH = 308
+    KW_TOKEN = 309
+    ACTIONS = 310
   end
 end

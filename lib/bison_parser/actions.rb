@@ -56,7 +56,7 @@ class BisonParser
       sequence << Bison::Nonterminal.new(follower)
     end
 
-    def _cd7cf7f76d18e836c32a59fc18416214(sequence, tag, follower)
+    def _4194bb95808462eab11e86379b0ac20a(sequence, follower, tag)
       sequence << Bison::Nonterminal.new(follower, tag)
     end
   end

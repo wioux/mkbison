@@ -3,6 +3,8 @@
 %token STRING
 %token COLON
 %token SEMICOLON
+%token LBRACK
+%token RBRACK
 %token PIPE
 %token HASH
 %token DOUBLE_HASH
@@ -12,43 +14,43 @@
 %%
 
 grammar_file :
-  tokens:token_list DOUBLE_HASH rules:grammar_rules code:optional_code
+  token_list[tokens] DOUBLE_HASH grammar_rules[rules] optional_code[code]
   { self.result = Bison::GrammarFile.new(tokens, rules, code) }
 ;
 
 optional_code :
   { nil }
 |
-  DOUBLE_HASH actions:ACTIONS
+  DOUBLE_HASH ACTIONS[actions]
   { actions }
 ;
 
 token_list :
   { [] }
 |
-  list:token_list
-  HASH KW_TOKEN name:IDENTIFIER
+  token_list[list]
+  HASH KW_TOKEN IDENTIFIER[name]
   { list << name }
 ;
 
 grammar_rules:
   { [] }
 |
-  list:grammar_rules rule:grammar_rule
+  grammar_rules[list] grammar_rule[rule]
   { list << rule }
 ;
 
 grammar_rule:
-  name:IDENTIFIER COLON components:components SEMICOLON
+  IDENTIFIER[name] COLON components[components] SEMICOLON
   { Bison::Rule.new(name, components) }
 ;
 
 components:
   { [] }
-| component:component
+| component[component]
   { [component] }
 |
-  sequence:components PIPE component:component
+  components[sequence] PIPE component[component]
   { sequence << component }
 ;
 
@@ -56,17 +58,17 @@ components:
 component:
   sequence
 |
-  sequence:sequence action:ACTIONS
+  sequence[sequence] ACTIONS[action]
   { sequence.tap do |s|; s.action = action; end }
 ;
 
 sequence:
   { Bison::Sequence.new }
 |
-  sequence:sequence follower:IDENTIFIER
+  sequence[sequence] IDENTIFIER[follower]
   { sequence << Bison::Nonterminal.new(follower) }
 |
-  sequence:sequence tag:IDENTIFIER COLON follower:IDENTIFIER
+  sequence[sequence] IDENTIFIER[follower] LBRACK IDENTIFIER[tag] RBRACK
   { sequence << Bison::Nonterminal.new(follower, tag) }
 ;
 

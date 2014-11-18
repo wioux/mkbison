@@ -2,11 +2,13 @@
 %token STRING 301
 %token COLON 302
 %token SEMICOLON 303
-%token PIPE 304
-%token HASH 305
-%token DOUBLE_HASH 306
-%token KW_TOKEN 307
-%token ACTIONS 308
+%token LBRACK 304
+%token RBRACK 305
+%token PIPE 306
+%token HASH 307
+%token DOUBLE_HASH 308
+%token KW_TOKEN 309
+%token ACTIONS 310
 
 %define api.pure true
 %define parse.error verbose
@@ -98,8 +100,8 @@ sequence:
   { $$ = rb_funcall(__parser, rb_intern("_09d42eb57efb1183f13b22f0a20a761d"), 2, $1, $2); }
 
 |
-  sequence  IDENTIFIER  COLON  IDENTIFIER
-  { $$ = rb_funcall(__parser, rb_intern("_cd7cf7f76d18e836c32a59fc18416214"), 3, $1, $2, $4); }
+  sequence  IDENTIFIER  LBRACK  IDENTIFIER  RBRACK
+  { $$ = rb_funcall(__parser, rb_intern("_4194bb95808462eab11e86379b0ac20a"), 3, $1, $2, $4); }
 
 ;
 
