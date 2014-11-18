@@ -1,11 +1,11 @@
 
-require 'bison/version'
-require 'bison/file'
-require 'bison/production'
-require 'bison/nonterminal'
-
 module Bison
-  # Your code goes here...
 end
 
-require 'bison/bison'
+require 'bison/version'
+require 'bison/grammar_file'
+require 'bison/rule'
+require 'bison/sequence'
+require 'bison/nonterminal'
+
+require 'bison_parser'

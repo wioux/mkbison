@@ -1,0 +1,74 @@
+
+%token IDENTIFIER
+%token STRING
+%token COLON
+%token SEMICOLON
+%token PIPE
+%token LCURLY
+%token RCURLY
+%token HASH
+%token DOUBLE_HASH
+%token KW_TOKEN
+%token ACTIONS
+
+%%
+
+grammar_file :
+  tokens:token_list DOUBLE_HASH rules:grammar_rules code:optional_code
+  { self.result = Bison::GrammarFile.new(tokens, rules, code) }
+;
+
+optional_code :
+  { nil }
+|
+  DOUBLE_HASH actions:ACTIONS
+  { actions }
+;
+
+token_list :
+  { [] }
+|
+  list:token_list
+  HASH KW_TOKEN name:IDENTIFIER
+  { list << name }
+;
+
+grammar_rules:
+  { [] }
+|
+  list:grammar_rules rule:grammar_rule
+  { list << rule }
+;
+
+grammar_rule:
+  name:IDENTIFIER COLON components:components SEMICOLON
+  { Bison::Rule.new(name, components) }
+;
+
+components:
+  { [] }
+| component:component
+  { [component] }
+|
+  sequence:components PIPE component:component
+  { sequence << component }
+;
+
+
+component:
+  sequence
+|
+  sequence:sequence action:ACTIONS
+  { sequence.tap do |s|; s.action = action; end }
+;
+
+sequence:
+  { Bison::Sequence.new }
+|
+  sequence:sequence follower:IDENTIFIER
+  { sequence << Bison::Nonterminal.new(follower) }
+|
+  sequence:sequence tag:IDENTIFIER COLON follower:IDENTIFIER
+  { sequence << Bison::Nonterminal.new(follower, tag) }
+;
+

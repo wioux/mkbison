@@ -4,12 +4,10 @@
 %token COLON		302
 %token SEMICOLON	303
 %token PIPE		304
-%token LCURLY		305
-%token RCURLY		306
-%token HASH		307
-%token DOUBLE_HASH	308
-%token KW_TOKEN		309
-%token ACTIONS		310
+%token HASH		305
+%token DOUBLE_HASH	306
+%token KW_TOKEN		307
+%token ACTIONS		308
 
 %define api.pure true
 %define parse.error verbose

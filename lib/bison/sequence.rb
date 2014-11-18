@@ -2,20 +2,21 @@
 require 'digest'
 
 module Bison
-  class Production
-    attr_reader :sequence
+  class Sequence
+    attr_reader :elements
     attr_accessor :action
     
     def initialize
-      @sequence = []
+      @elements = []
     end
 
-    def push(e)
-      @sequence.push(e)
+    def <<(element)
+      elements << element
+      self
     end
 
     def tags
-      tags = sequence.each_with_index.map do |e, i|
+      tags = elements.each_with_index.map do |e, i|
         [i+1, e.tag] if e.tag
       end.compact
       
@@ -25,5 +26,6 @@ module Bison
     def action_name
       '_'+Digest::MD5.hexdigest(tags.inspect + action.inspect)
     end
+
   end
 end

@@ -1,109 +1,10 @@
 module Bison
-  class File
+  class GrammarFile
     attr_accessor :name
-    attr_reader :path, :tokens, :rules
-    attr_reader :file
-    attr_accessor :lex_value, :row, :col
+    attr_reader :tokens, :rules, :code
 
-    attr_accessor :section
-
-    module Token
-      IDENTIFIER =	300
-      STRING = 		301
-      COLON = 		302
-      SEMICOLON = 	303
-      PIPE = 		304
-      HASH = 		305
-      DOUBLE_HASH = 	306
-      KW_TOKEN = 	307
-      ACTIONS = 	308
-    end
-
-
-    def initialize(path)
-      @path = path
-      @rules = {}
-      @tokens = []
-      @file = ::File.open(path, 'r')
-      @section = 0
-      @row, @col = 1, 0
-    end
-
-    def lex
-      self.lex_value = nil
-
-      if section == 2
-        self.lex_value = file.read
-        self.section += 2
-        return Token::ACTIONS
-      end
-
-      # skip space
-      while (c = file.read(1)) && c =~ /\s/
-        if c == "\n"
-          self.row += 1
-          self.col = 0
-        else
-          self.col += 1
-        end
-      end
-      
-      return nil unless c
-
-      peak = file.read(1)
-      file.ungetc(peak) if peak
-
-      case c
-      when ':'
-        return Token::COLON
-      when ';'
-        return Token::SEMICOLON
-      when '|'
-        return Token::PIPE
-      when '%'
-        if peak == '%'
-          file.read(1)
-          self.col += 1
-          self.section += 1
-          return Token::DOUBLE_HASH
-        end
-        return Token::HASH
-      when '{'
-        action = ''
-        while (c = file.read(1))
-          break if c == '}'
-          action << c
-        end
-        self.lex_value = action
-        return Token::ACTIONS
-      end
-
-      if c =~ /\w/
-        string = c
-        while (c = file.read(1)) && c =~ /\w/
-          string << c
-        end
-
-        file.ungetc(c) if c
-
-        case string
-        when 'token'
-          return Token::KW_TOKEN
-        else
-          self.lex_value = string
-          return Token::IDENTIFIER
-        end
-      end
-
-      return nil
-    end
-
-    def create_rule(name, components)
-      rules[name] = components
-    end
-
-    def create_token(name)
-      tokens << name
+    def initialize(tokens, rules, code)
+      @tokens, @rules, @code = tokens, rules, code
     end
 
     def print_class(out=$stdout)
@@ -114,11 +15,12 @@ module Bison
       out.puts("require '#{uname}/base'")
       out.puts("require '#{uname}/tokens'")
       out.puts("require '#{uname}/actions'")
+      out.puts("require '#{uname}/#{uname}'")
     end
 
     def print_base_module(out=$stdout)
       out.puts("class #{name}")
-      out.puts("  attr_reader :io")
+      out.puts("  attr_reader :io, :result")
       out.puts("  attr_accessor :row, :col")
       out.puts
       
@@ -167,8 +69,8 @@ module Bison
     end
 
     def print_bison(out=$stdout)
-      tokens.each do |token|
-        out.puts("%token #{token}")
+      tokens.each_with_index do |token, i|
+        out.puts("%token #{token} #{300+i}")
       end
 
       out.puts
@@ -193,21 +95,21 @@ module Bison
       out.puts("%%")
       out.puts
 
-      rules.each do |name, alternatives|
-        out.puts("#{name}:")
-        alternatives.each_with_index do |alt, i|
+      rules.each do |rule|
+        out.puts("#{rule.name}:")
+        rule.components.each_with_index do |seq, i|
           out.puts("|") unless i.zero?
-          alt.sequence.each do |e|
+          seq.each do |e|
             case e
             when Bison::Nonterminal
               out.print("  #{e.name}")
             end
           end
           out.puts
-          if alt.action
-            method = "rb_intern(#{alt.action_name.inspect})"
-            args = alt.tags.keys.map{ |i| "$#{i}" }.join(', ')
-            args = args.empty? ? '0' : "#{alt.tags.size}, #{args}"
+          if seq.action
+            method = "rb_intern(#{seq.action_name.inspect})"
+            args = seq.tags.keys.map{ |i| "$#{i}" }.join(', ')
+            args = args.empty? ? '0' : "#{seq.tags.size}, #{args}"
             out.puts("  { $$ = rb_funcall(__parser, #{method}, #{args}); }")
             out.puts
           end
@@ -272,7 +174,7 @@ static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE parser) {
 
       out.puts("create_makefile '#{uname}/#{uname}'")
     end
-
+    
     def uname
       name.gsub(/([a-z])([A-Z])/, '\1_\2').downcase
     end

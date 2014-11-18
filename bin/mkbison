@@ -34,7 +34,7 @@ grammar_file or abort(opts.help)
 options.name or abort(opts.help)
 options.output or abort(opts.help)
 
-bison = Bison::File.new(grammar_file).parse
+bison = BisonParser.new(grammar_file).parse.parse_result
 abort unless bison
 
 bison.name = options.name
