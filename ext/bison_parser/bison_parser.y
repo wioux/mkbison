@@ -145,5 +145,6 @@ static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE parser) {
   }
   
   *lval = value;
+
   return FIX2INT(vtok);
 }

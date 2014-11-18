@@ -20,8 +20,8 @@ module Bison
 
     def print_base_module(out=$stdout)
       out.puts("class #{name}")
-      out.puts("  attr_reader :io, :result")
-      out.puts("  attr_accessor :row, :col")
+      out.puts("  attr_reader :io")
+      out.puts("  attr_accessor :lex_value, :result, :row, :col")
       out.puts
       
       out.puts("  module Base")

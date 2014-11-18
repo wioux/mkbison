@@ -1,5 +1,5 @@
 class BisonParser
-  attr_accessor :lex_value, :section, :result
+  attr_accessor :section
 
   def error(msg, row, col)
     abort("#{row}.#{col}: #{msg}")

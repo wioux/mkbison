@@ -1,6 +1,6 @@
 class BisonParser
   attr_reader :io
-  attr_accessor :row, :col
+  attr_accessor :lex_value, :result, :row, :col
 
   module Base
     def initialize(io)
