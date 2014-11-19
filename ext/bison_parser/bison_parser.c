@@ -1403,7 +1403,7 @@ yyreduce:
 
   case 13:
 #line 92 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = Qnil; }
+    { (yyval) = (yyvsp[0]); }
 #line 1408 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 

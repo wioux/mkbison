@@ -89,7 +89,7 @@ components:
 
 component:
   sequence
-  { $$ = Qnil; }
+  { $$ = $1; }
 |
   sequence ACTIONS
   { $$ = rb_funcall(__parser, rb_intern("_b8e629395574e33fa8fe4f175c10a466"), 2, $1, $2); }

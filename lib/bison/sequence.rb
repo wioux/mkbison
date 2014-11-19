@@ -33,6 +33,8 @@ module Bison
         args = tags.keys.map{ |i| "$#{i}" }.join(', ')
         args = args.empty? ? '0' : "#{tags.size}, #{args}"
         "rb_funcall(#{receiver}, #{method}, #{args})"
+      elsif elements.size != 0
+        '$1'
       else
         'Qnil'
       end
