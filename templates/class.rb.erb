@@ -1,5 +1,9 @@
+<% if code %>
+<%= code.strip %>
+<% else %>
 class <%= name %>
 end
+<% end %>
 
 require '<%= uname %>/base'
 require '<%= uname %>/actions'

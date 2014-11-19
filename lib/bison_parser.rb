@@ -1,3 +1,4 @@
+
 class BisonParser
   attr_accessor :section
 
@@ -86,6 +87,7 @@ class BisonParser
     return nil
   end
 end
+
 
 require 'bison_parser/base'
 require 'bison_parser/actions'

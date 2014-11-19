@@ -50,18 +50,14 @@ bison_file = File.open("#{extdir}/#{underscore(options.name)}.y", 'w')
 extconf_file = File.open("#{extdir}/extconf.rb", 'w')
 actions_file = File.open("#{libdir}/actions.rb", 'w')
 base_file = File.open("#{libdir}/base.rb", 'w')
+ruby_file = File.open("#{libdir}.rb", 'w')
 
 bison.print_base_module(base_file)
 bison.print_actions_module(actions_file)
 bison.print_bison(bison_file)
 bison.print_extconf(extconf_file)
+bison.print_class(ruby_file)
 
-[base_file, actions_file, bison_file, extconf_file].each(&:close)
-
-unless File.exist?("#{libdir}.rb")
-  ruby_file = File.open("#{libdir}.rb", 'w')
-  bison.print_class(ruby_file)
-  ruby_file.close
-end
+[base_file, actions_file, bison_file, extconf_file, ruby_file].each(&:close)
 
 system('bison', '-o', "#{extdir}/#{underscore(options.name)}.c", bison_file.path)
