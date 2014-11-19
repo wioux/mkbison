@@ -1,3 +1,6 @@
+
+require 'erb'
+
 module Bison
   class GrammarFile
     attr_accessor :name
@@ -57,113 +60,8 @@ module Bison
     end
 
     def print_bison(out=$stdout)
-      tokens.each_with_index do |token, i|
-        out.puts("%token #{token} #{300+i}")
-      end
-
-      out.puts
-      out.puts("%define api.pure true")
-      out.puts("%define parse.error verbose")
-      out.puts("%parse-param { VALUE __parser }")
-      out.puts("%lex-param { VALUE __parser }")
-      out.puts("%locations")
-      out.puts
-
-      out.puts("%{")
-      out.puts("#include <ruby.h>")
-      out.puts("#define YYSTYPE VALUE")
-      out.puts("%}")
-      out.puts
-
-      out.puts("%code provides {")
-      out.puts("static int yylex(YYSTYPE *, YYLTYPE *, VALUE);")
-      out.puts("static void yyerror(YYLTYPE *, VALUE, const char *);")
-      out.puts("}")
-
-      out.puts("%%")
-      out.puts
-
-      rules.each do |rule|
-        out.puts("#{rule.name}:")
-        rule.components.each_with_index do |seq, i|
-          out.puts("|") unless i.zero?
-          seq.elements.each do |e|
-            case e
-            when Bison::Nonterminal
-              out.print("  #{e.name}")
-            end
-          end
-          out.puts
-          if seq.action
-            method = "rb_intern(#{seq.action_name.inspect})"
-            args = seq.tags.keys.map{ |i| "$#{i}" }.join(', ')
-            args = args.empty? ? '0' : "#{seq.tags.size}, #{args}"
-            out.puts("  { $$ = rb_funcall(__parser, #{method}, #{args}); }")
-            out.puts
-          end
-        end
-        out.puts(";")
-        out.puts
-      end
-
-      out.puts('%%')
-      out.puts
-
-      out.puts <<-EOF
-static VALUE c#{name};
-static VALUE c#{name}Tokens;
-
-static VALUE #{uname}_parse(VALUE);
-
-void Init_#{uname}(void) {
-  c#{name} = rb_define_class("#{name}", rb_cObject);
-  c#{name}Tokens = rb_define_module_under(c#{name}, "Tokens");
-EOF
-      out.puts
-      tokens.each do |token|
-        out.puts(%(  rb_define_const(c#{name}Tokens, "#{token}", INT2FIX(#{token}));))
-      end
-      out.puts
-
-      out.puts <<-EOF
-  rb_define_method(c#{name}, "parse", #{uname}_parse, 0);
-}
-
-VALUE #{uname}_parse(VALUE self) {
-  return yyparse(self) ? Qnil : self;
-}
-
-static void yyerror(YYLTYPE *loc, VALUE parser, const char *msg) {
-  rb_funcall(parser, rb_intern("error"), 3,
-             rb_str_new_cstr(msg), 
-             INT2FIX(loc->first_line), 
-             INT2FIX(loc->first_column));
-}
-
-static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE parser) {
-  VALUE value, vtok, vrow, vcol;
-
-  lloc->first_line = lloc->last_line;
-  lloc->first_column = lloc->last_column;
-
-  vtok = rb_funcall(parser, rb_intern("lex"), 0);
-  vrow = rb_funcall(parser, rb_intern("row"), 0);
-  vcol = rb_funcall(parser, rb_intern("col"), 0);
-  value = rb_funcall(parser, rb_intern("lex_value"), 0);
-
-  lloc->last_line = FIX2INT(vrow);
-  lloc->last_column = FIX2INT(vcol);
-
-  if (vtok == Qnil) {
-    *lval = Qnil;
-    return 0;
-  }
-  
-  *lval = value;
-
-  return FIX2INT(vtok);
-}
-      EOF
+      template = File.expand_path('../../../templates/parser.y.erb', __FILE__)
+      out.puts(ERB.new(File.read(template), nil, '-').result(binding))
     end
 
     def print_extconf(out=$stdout)

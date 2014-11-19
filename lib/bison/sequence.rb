@@ -27,5 +27,16 @@ module Bison
       '_'+Digest::MD5.hexdigest(tags.inspect + action.inspect)
     end
 
+    def action_funcall(receiver)
+      if action
+        method = "rb_intern(#{action_name.inspect})"
+        args = tags.keys.map{ |i| "$#{i}" }.join(', ')
+        args = args.empty? ? '0' : "#{tags.size}, #{args}"
+        "rb_funcall(#{receiver}, #{method}, #{args})"
+      else
+        'Qnil'
+      end
+    end
+
   end
 end

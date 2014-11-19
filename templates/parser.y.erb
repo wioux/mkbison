@@ -1,0 +1,87 @@
+
+<% tokens.each_with_index do |token, i| %>
+%token <%= token %>		<%= 300 + i %>
+<% end %>
+
+
+%define api.pure true
+%define parse.error verbose
+%parse-param { VALUE __parser }
+%lex-param { VALUE __parser }
+%locations
+
+%{
+#include <ruby.h>
+#define YYSTYPE VALUE
+%}
+
+%code provides {
+static int yylex(YYSTYPE *, YYLTYPE *, VALUE);
+static void yyerror(YYLTYPE *, VALUE, const char *);
+}
+
+%%
+
+<% rules.each do |rule| -%>
+<%= rule.name %>:
+<% rule.components.each_with_index do |seq, i| -%>
+<%= "|\n" unless i.zero? -%>
+<%= '  '+seq.elements.map(&:name).join(' ') unless seq.elements.empty? %>
+  { $$ = <%= seq.action_funcall('__parser') %>; }
+<% end -%>
+;
+
+<% end -%>
+
+%%
+
+static VALUE c<%= name %>;
+static VALUE c<%= name %>Tokens;
+
+static VALUE <%= uname %>_parse(VALUE);
+
+void Init_<%= uname %>(void) {
+  c<%= name %> = rb_define_class("<%= name %>", rb_cObject);
+  c<%= name %>Tokens = rb_define_module_under(c<%= name %>, "Tokens");
+
+<% tokens.each do |token| -%>
+  rb_define_const(c<%= name %>Tokens, "<%= token %>", INT2FIX(<%= token %>));
+<% end -%>
+
+  rb_define_method(c<%= name %>, "parse", <%= uname %>_parse, 0);
+}
+
+VALUE <%= uname %>_parse(VALUE self) {
+  return yyparse(self) ? Qnil : self;
+}
+
+static void yyerror(YYLTYPE *loc, VALUE parser, const char *msg) {
+  rb_funcall(parser, rb_intern("error"), 3,
+             rb_str_new_cstr(msg), 
+             INT2FIX(loc->first_line), 
+             INT2FIX(loc->first_column));
+}
+
+static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE parser) {
+  VALUE value, vtok, vrow, vcol;
+
+  lloc->first_line = lloc->last_line;
+  lloc->first_column = lloc->last_column;
+
+  vtok = rb_funcall(parser, rb_intern("lex"), 0);
+  vrow = rb_funcall(parser, rb_intern("row"), 0);
+  vcol = rb_funcall(parser, rb_intern("col"), 0);
+  value = rb_funcall(parser, rb_intern("lex_value"), 0);
+
+  lloc->last_line = FIX2INT(vrow);
+  lloc->last_column = FIX2INT(vcol);
+
+  if (vtok == Qnil) {
+    *lval = Qnil;
+    return 0;
+  }
+  
+  *lval = value;
+
+  return FIX2INT(vtok);
+}
