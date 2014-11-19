@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 19 "./ext/bison_parser/bison_parser.y" /* yacc.c:339  */
+#line 33 "./ext/bison_parser/bison_parser.y" /* yacc.c:339  */
 
 #include <ruby.h>
 #define YYSTYPE VALUE
@@ -138,7 +138,7 @@ struct YYLTYPE
 
 int yyparse (VALUE __parser);
 /* "%code provides" blocks.  */
-#line 24 "./ext/bison_parser/bison_parser.y" /* yacc.c:355  */
+#line 38 "./ext/bison_parser/bison_parser.y" /* yacc.c:355  */
 
 static int yylex(YYSTYPE *, YYLTYPE *, VALUE);
 static void yyerror(YYLTYPE *, VALUE, const char *);
@@ -454,8 +454,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    38,    41,    48,    51,    58,    61,    67,
-      74,    77,    81,    87,    89,    96,    99,   103
+       0,    46,    46,    52,    54,    60,    62,    68,    70,    75,
+      81,    83,    86,    91,    94,   100,   102,   105
 };
 #endif
 
@@ -1336,97 +1336,103 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 32 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 47 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_9567eabe8731ddffc930dfa47ba32e2d"), 3, (yyvsp[-3]), (yyvsp[-1]), (yyvsp[0])); }
 #line 1342 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 3:
-#line 38 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 52 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_3e56cd0676452cbd6b35cad018c8bd53"), 0); }
 #line 1348 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 4:
-#line 42 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 55 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_768f1d31b04599f62ec923463f1e2b6f"), 1, (yyvsp[0])); }
 #line 1354 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 5:
-#line 48 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 60 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
 #line 1360 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 52 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 63 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_11c40bda6346f9634f8e351c6d2ef8a1"), 2, (yyvsp[-3]), (yyvsp[0])); }
 #line 1366 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 7:
-#line 58 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 68 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
 #line 1372 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 8:
-#line 62 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 71 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_75f72aa78da3a939a875eeee6a83ac74"), 2, (yyvsp[-1]), (yyvsp[0])); }
 #line 1378 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 9:
-#line 68 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 76 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_4a41473bfd1b570b004d337eb6f31aa9"), 2, (yyvsp[-3]), (yyvsp[-1])); }
 #line 1384 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 10:
-#line 74 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 81 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
 #line 1390 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 11:
-#line 78 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 84 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_9dabfe7ebee5aeaf84d6b5447c719d0e"), 1, (yyvsp[0])); }
 #line 1396 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 12:
-#line 82 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 87 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     { (yyval) = rb_funcall(__parser, rb_intern("_6dcbbf21ac55c82874061429b5340726"), 2, (yyvsp[-2]), (yyvsp[0])); }
 #line 1402 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 14:
-#line 90 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_b8e629395574e33fa8fe4f175c10a466"), 2, (yyvsp[-1]), (yyvsp[0])); }
+  case 13:
+#line 92 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+    { (yyval) = Qnil; }
 #line 1408 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 15:
-#line 96 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_0521efb11c89cb982ac644a783948f3f"), 0); }
+  case 14:
+#line 95 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+    { (yyval) = rb_funcall(__parser, rb_intern("_b8e629395574e33fa8fe4f175c10a466"), 2, (yyvsp[-1]), (yyvsp[0])); }
 #line 1414 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 16:
+  case 15:
 #line 100 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_09d42eb57efb1183f13b22f0a20a761d"), 2, (yyvsp[-1]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__parser, rb_intern("_0521efb11c89cb982ac644a783948f3f"), 0); }
 #line 1420 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 17:
-#line 104 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_4194bb95808462eab11e86379b0ac20a"), 3, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-1])); }
+  case 16:
+#line 103 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+    { (yyval) = rb_funcall(__parser, rb_intern("_09d42eb57efb1183f13b22f0a20a761d"), 2, (yyvsp[-1]), (yyvsp[0])); }
 #line 1426 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
+  case 17:
+#line 106 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+    { (yyval) = rb_funcall(__parser, rb_intern("_4194bb95808462eab11e86379b0ac20a"), 3, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-1])); }
+#line 1432 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+    break;
 
-#line 1430 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+
+#line 1436 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1661,7 +1667,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 108 "./ext/bison_parser/bison_parser.y" /* yacc.c:1906  */
+#line 110 "./ext/bison_parser/bison_parser.y" /* yacc.c:1906  */
 
 
 static VALUE cBisonParser;

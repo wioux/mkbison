@@ -1,14 +1,28 @@
-%token IDENTIFIER 300
-%token STRING 301
-%token COLON 302
-%token SEMICOLON 303
-%token LBRACK 304
-%token RBRACK 305
-%token PIPE 306
-%token HASH 307
-%token DOUBLE_HASH 308
-%token KW_TOKEN 309
-%token ACTIONS 310
+
+
+%token IDENTIFIER		300
+
+%token STRING		301
+
+%token COLON		302
+
+%token SEMICOLON		303
+
+%token LBRACK		304
+
+%token RBRACK		305
+
+%token PIPE		306
+
+%token HASH		307
+
+%token DOUBLE_HASH		308
+
+%token KW_TOKEN		309
+
+%token ACTIONS		310
+
+
 
 %define api.pure true
 %define parse.error verbose
@@ -25,85 +39,73 @@
 static int yylex(YYSTYPE *, YYLTYPE *, VALUE);
 static void yyerror(YYLTYPE *, VALUE, const char *);
 }
+
 %%
 
 grammar_file:
-  token_list  DOUBLE_HASH  grammar_rules  optional_code
+  token_list DOUBLE_HASH grammar_rules optional_code
   { $$ = rb_funcall(__parser, rb_intern("_9567eabe8731ddffc930dfa47ba32e2d"), 3, $1, $3, $4); }
-
 ;
 
 optional_code:
 
   { $$ = rb_funcall(__parser, rb_intern("_3e56cd0676452cbd6b35cad018c8bd53"), 0); }
-
 |
-  DOUBLE_HASH  ACTIONS
+  DOUBLE_HASH ACTIONS
   { $$ = rb_funcall(__parser, rb_intern("_768f1d31b04599f62ec923463f1e2b6f"), 1, $2); }
-
 ;
 
 token_list:
 
   { $$ = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
-
 |
-  token_list  HASH  KW_TOKEN  IDENTIFIER
+  token_list HASH KW_TOKEN IDENTIFIER
   { $$ = rb_funcall(__parser, rb_intern("_11c40bda6346f9634f8e351c6d2ef8a1"), 2, $1, $4); }
-
 ;
 
 grammar_rules:
 
   { $$ = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
-
 |
-  grammar_rules  grammar_rule
+  grammar_rules grammar_rule
   { $$ = rb_funcall(__parser, rb_intern("_75f72aa78da3a939a875eeee6a83ac74"), 2, $1, $2); }
-
 ;
 
 grammar_rule:
-  IDENTIFIER  COLON  components  SEMICOLON
+  IDENTIFIER COLON components SEMICOLON
   { $$ = rb_funcall(__parser, rb_intern("_4a41473bfd1b570b004d337eb6f31aa9"), 2, $1, $3); }
-
 ;
 
 components:
 
   { $$ = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
-
 |
   component
   { $$ = rb_funcall(__parser, rb_intern("_9dabfe7ebee5aeaf84d6b5447c719d0e"), 1, $1); }
-
 |
-  components  PIPE  component
+  components PIPE component
   { $$ = rb_funcall(__parser, rb_intern("_6dcbbf21ac55c82874061429b5340726"), 2, $1, $3); }
-
 ;
 
 component:
   sequence
+  { $$ = Qnil; }
 |
-  sequence  ACTIONS
+  sequence ACTIONS
   { $$ = rb_funcall(__parser, rb_intern("_b8e629395574e33fa8fe4f175c10a466"), 2, $1, $2); }
-
 ;
 
 sequence:
 
   { $$ = rb_funcall(__parser, rb_intern("_0521efb11c89cb982ac644a783948f3f"), 0); }
-
 |
-  sequence  IDENTIFIER
+  sequence IDENTIFIER
   { $$ = rb_funcall(__parser, rb_intern("_09d42eb57efb1183f13b22f0a20a761d"), 2, $1, $2); }
-
 |
-  sequence  IDENTIFIER  LBRACK  IDENTIFIER  RBRACK
+  sequence IDENTIFIER LBRACK IDENTIFIER RBRACK
   { $$ = rb_funcall(__parser, rb_intern("_4194bb95808462eab11e86379b0ac20a"), 3, $1, $2, $4); }
-
 ;
+
 
 %%
 
