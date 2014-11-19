@@ -11,13 +11,8 @@ module Bison
     end
 
     def print_class(out=$stdout)
-      out.puts("class #{name}")
-      out.puts("end")
-      out.puts
-
-      out.puts("require '#{uname}/base'")
-      out.puts("require '#{uname}/actions'")
-      out.puts("require '#{uname}/#{uname}'")
+      template = File.expand_path('../../../templates/class.rb.erb', __FILE__)
+      out.puts(ERB.new(File.read(template), nil, '-').result(binding))
     end
 
     def print_base_module(out=$stdout)
