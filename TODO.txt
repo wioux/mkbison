@@ -1,4 +1,7 @@
   * Write to temp file, then move into place
+  * Keep track of locations (for errors and comments in output)
   * Add checks for every nonterminal defined
   * Balance curlies while parsing actions
   * Provide a set of lexing helpers in Base
+  * Provide an error class, have it raised by yyerror
+  * Move base module into the c extension
