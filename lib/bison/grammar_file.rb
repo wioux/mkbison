@@ -16,7 +16,6 @@ module Bison
       out.puts
 
       out.puts("require '#{uname}/base'")
-      out.puts("require '#{uname}/tokens'")
       out.puts("require '#{uname}/actions'")
       out.puts("require '#{uname}/#{uname}'")
     end
@@ -37,10 +36,8 @@ module Bison
     end
 
     def print_extconf(out=$stdout)
-      out.puts("require 'mkmf'")
-      out.puts
-
-      out.puts("create_makefile '#{uname}/#{uname}'")
+      template = File.expand_path('../../../templates/extconf.rb.erb', __FILE__)
+      out.puts(ERB.new(File.read(template), nil, '-').result(binding))
     end
     
     def uname
