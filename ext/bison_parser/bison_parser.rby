@@ -116,9 +116,12 @@ class BisonParser
     when ']'
       return Tokens::RBRACK
     when '{'
+      nesting = 1
       action = ''
-      while (c = self.read) && (c != '}')
-        action << c
+      while (c = self.read) && nesting > 0
+        nesting += 1 if c == '{'
+        nesting -= 1 if c == '}'
+        action << c unless nesting.zero?
       end
       self.lex_value = action
       return Tokens::ACTIONS
