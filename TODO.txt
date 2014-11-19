@@ -1,3 +1,4 @@
+  * Write to temp file, then move into place
   * Add checks for every nonterminal defined
   * Balance curlies while parsing actions
   * Provide a set of lexing helpers in Base
