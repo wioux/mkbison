@@ -129,11 +129,10 @@ class BisonParser
 
     if c =~ /\w/
       string = c
-      while (c = self.read) && c =~ /\w/
+      while (c = self.peak) && c =~ /\w/
+        self.read
         string << c
       end
-
-      io.ungetc(c) if c
 
       case string
       when 'token'
