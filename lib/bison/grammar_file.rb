@@ -22,23 +22,8 @@ module Bison
     end
 
     def print_base_module(out=$stdout)
-      out.puts("class #{name}")
-      out.puts("  attr_reader :io")
-      out.puts("  attr_accessor :lex_value, :result, :row, :col")
-      out.puts
-      
-      out.puts("  module Base")
-      out.puts("    def initialize(io)")
-      out.puts("      if String === io")
-      out.puts("        io = ::File.open(io, 'r')")
-      out.puts("      end")
-      out.puts("      @io, @row, @col = io, 0, 0")
-      out.puts("    end")
-      out.puts("  end")
-      out.puts
-
-      out.puts("  include Base")
-      out.puts("end")
+      template = File.expand_path('../../../templates/base.rb.erb', __FILE__)
+      out.puts(ERB.new(File.read(template), nil, '-').result(binding))
     end
 
     def print_actions_module(out=$stdout)
