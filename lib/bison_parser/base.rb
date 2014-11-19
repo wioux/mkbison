@@ -9,6 +9,21 @@ class BisonParser
       end
       @io, @row, @col = io, 0, 0
     end
+
+    def read
+      io.read(1).tap do |c|
+        if c == "\n"
+          self.row += 1
+          self.col = 0
+        elsif c
+          self.col += 1
+        end
+      end
+    end
+
+    def peak
+      io.read(1).tap{ |c| io.ungetc(c) if c }
+    end
   end
 
   include Base

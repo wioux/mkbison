@@ -17,19 +17,10 @@ class BisonParser
     end
 
     # skip space
-    while (c = io.read(1)) && c =~ /\s/
-      if c == "\n"
-        self.row += 1
-        self.col = 0
-      else
-        self.col += 1
-      end
+    while (c = self.read) && c =~ /\s/
     end
     
     return nil unless c
-
-    peak = io.read(1)
-    io.ungetc(peak) if peak
 
     case c
     when ':'
@@ -39,9 +30,8 @@ class BisonParser
     when '|'
       return Tokens::PIPE
     when '%'
-      if peak == '%'
-        io.read(1)
-        self.col += 1
+      if self.peak == '%'
+        self.read
         self.section += 1
         return Tokens::DOUBLE_HASH
       end
@@ -52,15 +42,8 @@ class BisonParser
       return Tokens::RBRACK
     when '{'
       action = ''
-      while (c = io.read(1))
-        break if c == '}'
+      while (c = self.read) && (c != '}')
         action << c
-        if c == "\n"
-          self.row += 1
-          self.col = 0
-        else
-          self.col += 1
-        end
       end
       self.lex_value = action
       return Tokens::ACTIONS
@@ -68,9 +51,8 @@ class BisonParser
 
     if c =~ /\w/
       string = c
-      while (c = io.read(1)) && c =~ /\w/
+      while (c = self.read) && c =~ /\w/
         string << c
-        self.col += 1
       end
 
       io.ungetc(c) if c
