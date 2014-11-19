@@ -136,7 +136,7 @@ struct YYLTYPE
 
 
 
-int yyparse (VALUE __parser);
+int yyparse (VALUE __actions);
 /* "%code provides" blocks.  */
 #line 38 "./ext/bison_parser/bison_parser.y" /* yacc.c:355  */
 
@@ -586,7 +586,7 @@ do                                                              \
     }                                                           \
   else                                                          \
     {                                                           \
-      yyerror (&yylloc, __parser, YY_("syntax error: cannot back up")); \
+      yyerror (&yylloc, __actions, YY_("syntax error: cannot back up")); \
       YYERROR;                                                  \
     }                                                           \
 while (0)
@@ -688,7 +688,7 @@ do {                                                                      \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
-                  Type, Value, Location, __parser); \
+                  Type, Value, Location, __actions); \
       YYFPRINTF (stderr, "\n");                                           \
     }                                                                     \
 } while (0)
@@ -699,12 +699,12 @@ do {                                                                      \
 `----------------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, VALUE __parser)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, VALUE __actions)
 {
   FILE *yyo = yyoutput;
   YYUSE (yyo);
   YYUSE (yylocationp);
-  YYUSE (__parser);
+  YYUSE (__actions);
   if (!yyvaluep)
     return;
 # ifdef YYPRINT
@@ -720,14 +720,14 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
 `--------------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, VALUE __parser)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, VALUE __actions)
 {
   YYFPRINTF (yyoutput, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
   YY_LOCATION_PRINT (yyoutput, *yylocationp);
   YYFPRINTF (yyoutput, ": ");
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp, __parser);
+  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp, __actions);
   YYFPRINTF (yyoutput, ")");
 }
 
@@ -760,7 +760,7 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule, VALUE __parser)
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule, VALUE __actions)
 {
   unsigned long int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
@@ -774,7 +774,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule
       yy_symbol_print (stderr,
                        yystos[yyssp[yyi + 1 - yynrhs]],
                        &(yyvsp[(yyi + 1) - (yynrhs)])
-                       , &(yylsp[(yyi + 1) - (yynrhs)])                       , __parser);
+                       , &(yylsp[(yyi + 1) - (yynrhs)])                       , __actions);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -782,7 +782,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule
 # define YY_REDUCE_PRINT(Rule)          \
 do {                                    \
   if (yydebug)                          \
-    yy_reduce_print (yyssp, yyvsp, yylsp, Rule, __parser); \
+    yy_reduce_print (yyssp, yyvsp, yylsp, Rule, __actions); \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1040,11 +1040,11 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp, VALUE __parser)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp, VALUE __actions)
 {
   YYUSE (yyvaluep);
   YYUSE (yylocationp);
-  YYUSE (__parser);
+  YYUSE (__actions);
   if (!yymsg)
     yymsg = "Deleting";
   YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
@@ -1062,7 +1062,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
 `----------*/
 
 int
-yyparse (VALUE __parser)
+yyparse (VALUE __actions)
 {
 /* The lookahead symbol.  */
 int yychar;
@@ -1256,7 +1256,7 @@ yybackup:
   if (yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token: "));
-      yychar = yylex (&yylval, &yylloc, __parser);
+      yychar = yylex (&yylval, &yylloc, __actions);
     }
 
   if (yychar <= YYEOF)
@@ -1337,67 +1337,67 @@ yyreduce:
     {
         case 2:
 #line 47 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_9567eabe8731ddffc930dfa47ba32e2d"), 3, (yyvsp[-3]), (yyvsp[-1]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_9567eabe8731ddffc930dfa47ba32e2d"), 3, (yyvsp[-3]), (yyvsp[-1]), (yyvsp[0])); }
 #line 1342 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 3:
 #line 52 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_3e56cd0676452cbd6b35cad018c8bd53"), 0); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_3e56cd0676452cbd6b35cad018c8bd53"), 0); }
 #line 1348 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 4:
 #line 55 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_768f1d31b04599f62ec923463f1e2b6f"), 1, (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_768f1d31b04599f62ec923463f1e2b6f"), 1, (yyvsp[0])); }
 #line 1354 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 5:
 #line 60 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
 #line 1360 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 6:
 #line 63 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_11c40bda6346f9634f8e351c6d2ef8a1"), 2, (yyvsp[-3]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_11c40bda6346f9634f8e351c6d2ef8a1"), 2, (yyvsp[-3]), (yyvsp[0])); }
 #line 1366 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 7:
 #line 68 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
 #line 1372 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 8:
 #line 71 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_75f72aa78da3a939a875eeee6a83ac74"), 2, (yyvsp[-1]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_75f72aa78da3a939a875eeee6a83ac74"), 2, (yyvsp[-1]), (yyvsp[0])); }
 #line 1378 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 9:
 #line 76 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_4a41473bfd1b570b004d337eb6f31aa9"), 2, (yyvsp[-3]), (yyvsp[-1])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_4a41473bfd1b570b004d337eb6f31aa9"), 2, (yyvsp[-3]), (yyvsp[-1])); }
 #line 1384 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 10:
 #line 81 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_ab0d94dd8362e7e1934794bde7b3b63c"), 0); }
 #line 1390 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 11:
 #line 84 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_9dabfe7ebee5aeaf84d6b5447c719d0e"), 1, (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_9dabfe7ebee5aeaf84d6b5447c719d0e"), 1, (yyvsp[0])); }
 #line 1396 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 12:
 #line 87 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_6dcbbf21ac55c82874061429b5340726"), 2, (yyvsp[-2]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_6dcbbf21ac55c82874061429b5340726"), 2, (yyvsp[-2]), (yyvsp[0])); }
 #line 1402 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
@@ -1409,25 +1409,25 @@ yyreduce:
 
   case 14:
 #line 95 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_b8e629395574e33fa8fe4f175c10a466"), 2, (yyvsp[-1]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_b8e629395574e33fa8fe4f175c10a466"), 2, (yyvsp[-1]), (yyvsp[0])); }
 #line 1414 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 15:
 #line 100 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_0521efb11c89cb982ac644a783948f3f"), 0); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_0521efb11c89cb982ac644a783948f3f"), 0); }
 #line 1420 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 16:
 #line 103 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_09d42eb57efb1183f13b22f0a20a761d"), 2, (yyvsp[-1]), (yyvsp[0])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_09d42eb57efb1183f13b22f0a20a761d"), 2, (yyvsp[-1]), (yyvsp[0])); }
 #line 1426 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 17:
 #line 106 "./ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
-    { (yyval) = rb_funcall(__parser, rb_intern("_4194bb95808462eab11e86379b0ac20a"), 3, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-1])); }
+    { (yyval) = rb_funcall(__actions, rb_intern("_4194bb95808462eab11e86379b0ac20a"), 3, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-1])); }
 #line 1432 "./ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
@@ -1483,7 +1483,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (&yylloc, __parser, YY_("syntax error"));
+      yyerror (&yylloc, __actions, YY_("syntax error"));
 #else
 # define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
                                         yyssp, yytoken)
@@ -1510,7 +1510,7 @@ yyerrlab:
                 yymsgp = yymsg;
               }
           }
-        yyerror (&yylloc, __parser, yymsgp);
+        yyerror (&yylloc, __actions, yymsgp);
         if (yysyntax_error_status == 2)
           goto yyexhaustedlab;
       }
@@ -1534,7 +1534,7 @@ yyerrlab:
       else
         {
           yydestruct ("Error: discarding",
-                      yytoken, &yylval, &yylloc, __parser);
+                      yytoken, &yylval, &yylloc, __actions);
           yychar = YYEMPTY;
         }
     }
@@ -1591,7 +1591,7 @@ yyerrlab1:
 
       yyerror_range[1] = *yylsp;
       yydestruct ("Error: popping",
-                  yystos[yystate], yyvsp, yylsp, __parser);
+                  yystos[yystate], yyvsp, yylsp, __actions);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -1633,7 +1633,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (&yylloc, __parser, YY_("memory exhausted"));
+  yyerror (&yylloc, __actions, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -1645,7 +1645,7 @@ yyreturn:
          user semantic actions for why this is necessary.  */
       yytoken = YYTRANSLATE (yychar);
       yydestruct ("Cleanup: discarding lookahead",
-                  yytoken, &yylval, &yylloc, __parser);
+                  yytoken, &yylval, &yylloc, __actions);
     }
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYABORT or YYACCEPT.  */
@@ -1654,7 +1654,7 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-                  yystos[*yyssp], yyvsp, yylsp, __parser);
+                  yystos[*yyssp], yyvsp, yylsp, __actions);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -1672,12 +1672,14 @@ yyreturn:
 
 static VALUE cBisonParser;
 static VALUE cBisonParserTokens;
+static VALUE cBisonParserActions;
 
 static VALUE bison_parser_parse(VALUE);
 
 void Init_bison_parser(void) {
   cBisonParser = rb_define_class("BisonParser", rb_cObject);
   cBisonParserTokens = rb_define_module_under(cBisonParser, "Tokens");
+  cBisonParserActions = rb_define_class_under(cBisonParser, "Actions", rb_cObject);
 
   rb_define_const(cBisonParserTokens, "IDENTIFIER", INT2FIX(IDENTIFIER));
   rb_define_const(cBisonParserTokens, "STRING", INT2FIX(STRING));
@@ -1695,18 +1697,25 @@ void Init_bison_parser(void) {
 }
 
 VALUE bison_parser_parse(VALUE self) {
-  return yyparse(self) ? Qnil : self;
+  VALUE actions = rb_funcall(cBisonParserActions, rb_intern("new"), 0);
+  rb_funcall(actions, rb_intern("parser="), 1, self);
+  if (yyparse(actions))
+    return Qnil;
+  return rb_funcall(actions, rb_intern("result"), 0);
 }
 
-static void yyerror(YYLTYPE *loc, VALUE parser, const char *msg) {
+static void yyerror(YYLTYPE *loc, VALUE actions, const char *msg) {
+  VALUE parser = rb_funcall(actions, rb_intern("parser"), 0);
   rb_funcall(parser, rb_intern("error"), 3,
              rb_str_new_cstr(msg), 
              INT2FIX(loc->first_line), 
              INT2FIX(loc->first_column));
 }
 
-static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE parser) {
-  VALUE value, vtok, vrow, vcol;
+static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE actions) {
+  VALUE parser, value, vtok, vrow, vcol;
+
+  parser = rb_funcall(actions, rb_intern("parser"), 0);
 
   lloc->first_line = lloc->last_line;
   lloc->first_column = lloc->last_column;

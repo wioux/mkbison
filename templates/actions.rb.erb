@@ -1,12 +1,10 @@
 class <%= name %>
-  module Actions
-<% rules.map(&:components).flatten.select(&:action).each_with_index do |seq, i| -%>
-<%= "\n" unless i.zero? -%>
+  class Actions
+    attr_accessor :parser, :result
+<% rules.map(&:components).flatten.select(&:action).each_with_index do |seq, i| %>
     def <%= seq.action_name %>(<%= seq.tags.values.join(', ') %>)
       <%= seq.action.strip %>
     end
 <% end -%>
   end
-
-  include Actions
 end

@@ -1,5 +1,7 @@
 class BisonParser
-  module Actions
+  class Actions
+    attr_accessor :parser, :result
+
     def _9567eabe8731ddffc930dfa47ba32e2d(tokens, rules, code)
       self.result = Bison::GrammarFile.new(tokens, rules, code)
     end
@@ -60,6 +62,4 @@ class BisonParser
       sequence << Bison::Nonterminal.new(follower, tag)
     end
   end
-
-  include Actions
 end

@@ -6,8 +6,8 @@
 
 %define api.pure true
 %define parse.error verbose
-%parse-param { VALUE __parser }
-%lex-param { VALUE __parser }
+%parse-param { VALUE __actions }
+%lex-param { VALUE __actions }
 %locations
 
 %{
@@ -27,7 +27,7 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
 <% rule.components.each_with_index do |seq, i| -%>
 <%= "|\n" unless i.zero? -%>
 <%= '  '+seq.elements.map(&:name).join(' ') unless seq.elements.empty? %>
-  { $$ = <%= seq.action_funcall('__parser') %>; }
+  { $$ = <%= seq.action_funcall('__actions') %>; }
 <% end -%>
 ;
 
@@ -37,12 +37,14 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
 
 static VALUE c<%= name %>;
 static VALUE c<%= name %>Tokens;
+static VALUE c<%= name %>Actions;
 
 static VALUE <%= uname %>_parse(VALUE);
 
 void Init_<%= uname %>(void) {
   c<%= name %> = rb_define_class("<%= name %>", rb_cObject);
   c<%= name %>Tokens = rb_define_module_under(c<%= name %>, "Tokens");
+  c<%= name %>Actions = rb_define_class_under(c<%= name %>, "Actions", rb_cObject);
 
 <% tokens.each do |token| -%>
   rb_define_const(c<%= name %>Tokens, "<%= token %>", INT2FIX(<%= token %>));
@@ -52,18 +54,25 @@ void Init_<%= uname %>(void) {
 }
 
 VALUE <%= uname %>_parse(VALUE self) {
-  return yyparse(self) ? Qnil : self;
+  VALUE actions = rb_funcall(c<%= name %>Actions, rb_intern("new"), 0);
+  rb_funcall(actions, rb_intern("parser="), 1, self);
+  if (yyparse(actions))
+    return Qnil;
+  return rb_funcall(actions, rb_intern("result"), 0);
 }
 
-static void yyerror(YYLTYPE *loc, VALUE parser, const char *msg) {
+static void yyerror(YYLTYPE *loc, VALUE actions, const char *msg) {
+  VALUE parser = rb_funcall(actions, rb_intern("parser"), 0);
   rb_funcall(parser, rb_intern("error"), 3,
              rb_str_new_cstr(msg), 
              INT2FIX(loc->first_line), 
              INT2FIX(loc->first_column));
 }
 
-static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE parser) {
-  VALUE value, vtok, vrow, vcol;
+static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE actions) {
+  VALUE parser, value, vtok, vrow, vcol;
+
+  parser = rb_funcall(actions, rb_intern("parser"), 0);
 
   lloc->first_line = lloc->last_line;
   lloc->first_column = lloc->last_column;
