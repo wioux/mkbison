@@ -27,7 +27,13 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
 <% rule.components.each_with_index do |seq, i| -%>
 <%= "|\n" unless i.zero? -%>
 <%= '  '+seq.elements.map(&:name).join(' ') unless seq.elements.empty? %>
-  { $$ = <%= seq.action_funcall('__actions') %>; }
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+<% seq.tags.each do |i, name| -%>
+    rb_ivar_set(__actions, rb_intern("@<%= name %>"), rb_ary_new3(2, INT2FIX(@<%= i %>.first_line), @<%= i %>.first_column));
+<% end -%>
+    $$ = <%= seq.action_funcall('__actions') %>;
+  }
 <% end -%>
 ;
 
