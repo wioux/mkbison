@@ -42,21 +42,8 @@ module Bison
     end
 
     def print_actions_module(out=$stdout)
-      out.puts("class #{name}")
-      out.puts("  module Actions")
-
-      rules.map(&:components).flatten.select(&:action).each_with_index do |rule, i|
-        out.puts unless i.zero?
-        out.puts("    def #{rule.action_name}(#{rule.tags.values.join(', ')})")
-        out.puts("      #{rule.action.strip}")
-        out.puts("    end")
-      end
-
-      out.puts("  end")
-      out.puts
-
-      out.puts("  include Actions")
-      out.puts("end")
+      template = File.expand_path('../../../templates/actions.rb.erb', __FILE__)
+      out.puts(ERB.new(File.read(template), nil, '-').result(binding))
     end
 
     def print_bison(out=$stdout)
