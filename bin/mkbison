@@ -5,6 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'bison'
 require 'fileutils'
+require 'tempfile'
 require 'optparse'
 require 'ostruct'
 
@@ -58,4 +59,7 @@ bison.print_class(ruby_file)
 
 [base_file, actions_file, bison_file, extconf_file, ruby_file].each(&:close)
 
-system('bison', '-o', "#{extdir}/#{underscore(options.name)}.c", bison_file.path)
+# Do a dry run
+Tempfile.new('bison-output.c').tap do |output|
+  system('bison', '-o', output.path, bison_file.path)
+end
