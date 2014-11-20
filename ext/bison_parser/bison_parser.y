@@ -1,25 +1,14 @@
 
-
 %token IDENTIFIER		300
-
 %token STRING		301
-
 %token COLON		302
-
 %token SEMICOLON		303
-
 %token LBRACK		304
-
 %token RBRACK		305
-
 %token PIPE		306
-
 %token HASH		307
-
 %token DOUBLE_HASH		308
-
 %token KW_TOKEN		309
-
 %token ACTIONS		310
 
 
