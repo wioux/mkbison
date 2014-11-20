@@ -1,4 +1,3 @@
-  * Don't include action source in digest
   * Write to temp file, then move into place
   * Keep track of locations (for errors and comments in output)
   * Add checks for every nonterminal defined

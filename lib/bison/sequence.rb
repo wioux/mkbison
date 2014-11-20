@@ -3,6 +3,7 @@ require 'digest'
 
 module Bison
   class Sequence
+    attr_accessor :rule, :index
     attr_reader :elements
     attr_accessor :action
     
@@ -24,7 +25,7 @@ module Bison
     end
 
     def action_name
-      '_'+Digest::MD5.hexdigest(tags.inspect + action.inspect)
+      "_#{index}_#{rule.name}_#{Digest::MD5.hexdigest(tags.inspect)}"
     end
 
     def action_funcall(receiver)
