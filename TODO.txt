@@ -1,5 +1,6 @@
-  * Write to temp file, then move into place
-  * Keep track of locations (for errors and comments in output)
-  * Add checks for every nonterminal defined
+  * Implement %left, %right
   * Provide an error class, have it raised by yyerror
+  * Keep track of locations (for errors and comments in output)
+  * Write to temp file, then move into place
+  * Add checks for every nonterminal defined
   * Move base module into the c extension
