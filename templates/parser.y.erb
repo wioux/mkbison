@@ -1,6 +1,6 @@
 
 <% tokens.each_with_index do |token, i| -%>
-%token <%= token %>		<%= 300 + i %>
+%token <%= token %><%= "\t" * (4 - (token.length+7)/8)%><%= 300 + i %>
 <% end %>
 
 
