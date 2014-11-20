@@ -64,12 +64,21 @@ token_list:
     $$ = rb_funcall(__actions, rb_intern("_0_token_list_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
 |
-  token_list HASH KW_TOKEN IDENTIFIER
+  token_list token
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@list"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
-    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@4.first_line), INT2FIX(@4.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_1_token_list_e749790227da69e568ebd1151b35dce3"), 2, $1, $4);
+    rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_1_token_list_21a28d2acdd128c24843b772a9881f2d"), 2, $1, $2);
+  }
+;
+
+token:
+  HASH KW_TOKEN IDENTIFIER
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_0_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
 ;
 

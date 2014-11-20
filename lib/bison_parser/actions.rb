@@ -18,8 +18,12 @@ class BisonParser
       []
     end
 
-    def _1_token_list_e749790227da69e568ebd1151b35dce3(list, name)
-      list << name
+    def _1_token_list_21a28d2acdd128c24843b772a9881f2d(list, token)
+      list << token
+    end
+
+    def _0_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
+      Bison::Token.new(name)
     end
 
     def _0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b()

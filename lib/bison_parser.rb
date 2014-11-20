@@ -55,8 +55,7 @@ class BisonParser
         string << c
       end
 
-      case string
-      when 'token'
+      if string == 'token' && section.zero?
         return Tokens::KW_TOKEN
       else
         self.lex_value = string

@@ -1,6 +1,6 @@
 
 <% tokens.each_with_index do |token, i| -%>
-%token <%= token %><%= "\t" * (4 - (token.length+7)/8)%><%= 300 + i %>
+%token <%= token.name %><%= "\t" * (4 - (token.name.length+7)/8)%><%= 300 + i %>
 <% end %>
 
 
@@ -53,7 +53,7 @@ void Init_<%= uname %>(void) {
   c<%= name %>Actions = rb_define_class_under(c<%= name %>, "Actions", rb_cObject);
 
 <% tokens.each do |token| -%>
-  rb_define_const(c<%= name %>Tokens, "<%= token %>", INT2FIX(<%= token %>));
+  rb_define_const(c<%= name %>Tokens, "<%= token.name %>", INT2FIX(<%= token.name %>));
 <% end -%>
 
   rb_define_method(c<%= name %>, "parse", <%= uname %>_parse, 0);

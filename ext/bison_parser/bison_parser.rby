@@ -28,9 +28,13 @@ optional_code :
 token_list :
   { [] }
 |
-  token_list[list]
+  token_list[list] token[token]
+  { list << token }
+;
+
+token:
   HASH KW_TOKEN IDENTIFIER[name]
-  { list << name }
+  { Bison::Token.new(name) }
 ;
 
 grammar_rules:
@@ -130,8 +134,7 @@ class BisonParser
         string << c
       end
 
-      case string
-      when 'token'
+      if string == 'token' && section.zero?
         return Tokens::KW_TOKEN
       else
         self.lex_value = string
