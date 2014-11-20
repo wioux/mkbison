@@ -220,20 +220,20 @@ static void yyerror(YYLTYPE *loc, VALUE actions, const char *msg) {
 }
 
 static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE actions) {
-  VALUE parser, value, vtok, vrow, vcol;
+  VALUE parser, value, vtok;
 
   parser = rb_funcall(actions, rb_intern("parser"), 0);
 
-  lloc->first_line = lloc->last_line;
-  lloc->first_column = lloc->last_column;
+  rb_funcall(parser, rb_intern("token_row="), 1, INT2FIX(lloc->last_line));
+  rb_funcall(parser, rb_intern("token_col="), 1, INT2FIX(lloc->last_column));
 
   vtok = rb_funcall(parser, rb_intern("lex"), 0);
-  vrow = rb_funcall(parser, rb_intern("row"), 0);
-  vcol = rb_funcall(parser, rb_intern("col"), 0);
   value = rb_funcall(parser, rb_intern("lex_value"), 0);
 
-  lloc->last_line = FIX2INT(vrow);
-  lloc->last_column = FIX2INT(vcol);
+  lloc->first_line = FIX2INT(rb_funcall(parser, rb_intern("token_row"), 0));
+  lloc->first_column = FIX2INT(rb_funcall(parser, rb_intern("token_col"), 0));
+  lloc->last_line = FIX2INT(rb_funcall(parser, rb_intern("row"), 0));
+  lloc->last_column = FIX2INT(rb_funcall(parser, rb_intern("col"), 0));
 
   if (vtok == Qnil) {
     *lval = Qnil;

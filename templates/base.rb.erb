@@ -1,6 +1,7 @@
 class <%= name %>
   attr_reader :io
-  attr_accessor :lex_value, :result, :row, :col
+  attr_accessor :lex_value, :token_row, :token_col, :row, :col
+  attr_accessor :result
 
   module Base
     def initialize(io)
@@ -23,6 +24,11 @@ class <%= name %>
 
     def peak
       io.read(1).tap{ |c| io.ungetc(c) if c }
+    end
+
+    def begin_token
+      self.token_row = row
+      self.token_col = col
     end
   end
 
