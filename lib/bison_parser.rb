@@ -2,10 +2,6 @@
 class BisonParser
   attr_accessor :section
 
-  def error(msg, row, col)
-    abort("#{row}.#{col}: #{msg}")
-  end
-
   def lex
     self.section ||= 0
     self.lex_value = nil
