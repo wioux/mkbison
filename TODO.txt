@@ -1,3 +1,4 @@
+  * #begin_token
   * Write to temp file, then move into place
   * Keep track of locations (for errors and comments in output)
   * Add checks for every nonterminal defined
