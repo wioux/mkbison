@@ -59,7 +59,7 @@ component:
   sequence
 |
   sequence[sequence] ACTIONS[action]
-  { sequence.tap do |s|; s.action = action; end }
+  { sequence.tap{ |s| s.action = action } }
 ;
 
 sequence:
