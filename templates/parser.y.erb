@@ -30,7 +30,7 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
 <% seq.tags.each do |i, name| -%>
-    rb_ivar_set(__actions, rb_intern("@<%= name %>"), rb_ary_new3(2, INT2FIX(@<%= i %>.first_line), @<%= i %>.first_column));
+    rb_ivar_set(__actions, rb_intern("@<%= name %>"), rb_ary_new3(2, INT2FIX(@<%= i %>.first_line), INT2FIX(@<%= i %>.first_column)));
 <% end -%>
     $$ = <%= seq.action_funcall('__actions') %>;
   }
