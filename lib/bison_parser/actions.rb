@@ -31,7 +31,7 @@ class BisonParser
     end
 
     def _0_grammar_rule_bce7f6337f3284ba4a3537cc1d642c28(name, components)
-      Bison::Rule.new(name, components)
+      Bison::Rule.new(name, components).tap{ |r| r.location = @name }
     end
 
     def _0_components_99914b932bd37a50b983c5e7c90ae93b()
@@ -55,11 +55,11 @@ class BisonParser
     end
 
     def _1_sequence_4b2903c3aeb37d22d413a53653d0df28(sequence, follower)
-      sequence << Bison::Nonterminal.new(follower)
+      sequence << Bison::Nonterminal.new(follower).tap{ |x| x.location = @follower }
     end
 
     def _2_sequence_68f2380aa0f3a7de0fb9b3482705a54c(sequence, follower, tag)
-      sequence << Bison::Nonterminal.new(follower, tag)
+      sequence << Bison::Nonterminal.new(follower, tag).tap{ |x| x.location = @follower }
     end
   end
 end

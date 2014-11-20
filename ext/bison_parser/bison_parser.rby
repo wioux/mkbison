@@ -42,7 +42,7 @@ grammar_rules:
 
 grammar_rule:
   IDENTIFIER[name] COLON components[components] SEMICOLON
-  { Bison::Rule.new(name, components) }
+  { Bison::Rule.new(name, components).tap{ |r| r.location = @name } }
 ;
 
 components:
@@ -66,10 +66,10 @@ sequence:
   { Bison::Sequence.new }
 |
   sequence[sequence] IDENTIFIER[follower]
-  { sequence << Bison::Nonterminal.new(follower) }
+  { sequence << Bison::Nonterminal.new(follower).tap{ |x| x.location = @follower } }
 |
   sequence[sequence] IDENTIFIER[follower] LBRACK IDENTIFIER[tag] RBRACK
-  { sequence << Bison::Nonterminal.new(follower, tag) }
+  { sequence << Bison::Nonterminal.new(follower, tag).tap{ |x| x.location = @follower } }
 ;
 
 %%
