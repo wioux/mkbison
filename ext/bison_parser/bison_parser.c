@@ -1823,6 +1823,7 @@ static void yyerror(YYLTYPE *loc, VALUE actions, const char *msg) {
 }
 
 static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE actions) {
+  int c;
   VALUE parser, value, vtok;
 
   parser = rb_funcall(actions, rb_intern("parser"), 0);
@@ -1843,8 +1844,17 @@ static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE actions) {
     *lval = Qnil;
     return 0;
   }
-  
-  *lval = value;
 
-  return FIX2INT(vtok);
+  if (vtok & 1) {
+    *lval = value;
+    return FIX2INT(vtok);
+  }
+
+  if (RBASIC(vtok)->klass == rb_cString) {
+    c = StringValueCStr(vtok)[0];
+    *lval = rb_sprintf("%c", c);
+    return c;
+  }
+
+  return 0;
 }
