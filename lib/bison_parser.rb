@@ -55,8 +55,12 @@ class BisonParser
         string << c
       end
 
-      if string == 'token' && section.zero?
+      if section.zero? && string == 'token'
         return Tokens::KW_TOKEN
+      elsif section.zero? && string == 'left'
+        return Tokens::KW_LEFT
+      elsif section.zero? && string == 'right'
+        return Tokens::KW_RIGHT
       else
         self.lex_value = string
         return Tokens::IDENTIFIER

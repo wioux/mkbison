@@ -9,7 +9,10 @@
 %token HASH
 %token DOUBLE_HASH
 %token KW_TOKEN
+%token KW_LEFT
+%token KW_RIGHT
 %token ACTIONS
+
 
 %%
 
@@ -35,6 +38,12 @@ token_list :
 token:
   HASH KW_TOKEN IDENTIFIER[name]
   { Bison::Token.new(name) }
+|
+  HASH KW_LEFT IDENTIFIER[name]
+  { Bison::Token.new(name, :left) }
+|
+  HASH KW_RIGHT IDENTIFIER[name]
+  { Bison::Token.new(name, :right) }
 ;
 
 grammar_rules:
@@ -134,8 +143,12 @@ class BisonParser
         string << c
       end
 
-      if string == 'token' && section.zero?
+      if section.zero? && string == 'token'
         return Tokens::KW_TOKEN
+      elsif section.zero? && string == 'left'
+        return Tokens::KW_LEFT
+      elsif section.zero? && string == 'right'
+        return Tokens::KW_RIGHT
       else
         self.lex_value = string
         return Tokens::IDENTIFIER

@@ -1,16 +1,17 @@
 
-%token IDENTIFIER		300
-%token STRING			301
-%token COLON			302
-%token SEMICOLON		303
-%token LBRACK			304
-%token RBRACK			305
-%token PIPE			306
-%token HASH			307
-%token DOUBLE_HASH		308
-%token KW_TOKEN			309
-%token ACTIONS			310
-
+%token	IDENTIFIER			300
+%token	STRING				301
+%token	COLON				302
+%token	SEMICOLON			303
+%token	LBRACK				304
+%token	RBRACK				305
+%token	PIPE				306
+%token	HASH				307
+%token	DOUBLE_HASH			308
+%token	KW_TOKEN			309
+%token	KW_LEFT				310
+%token	KW_RIGHT			311
+%token	ACTIONS				312
 
 
 %define api.pure true
@@ -79,6 +80,20 @@ token:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
+  }
+|
+  HASH KW_LEFT IDENTIFIER
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_1_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
+  }
+|
+  HASH KW_RIGHT IDENTIFIER
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_2_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
 ;
 
@@ -196,6 +211,8 @@ void Init_bison_parser(void) {
   rb_define_const(cBisonParserTokens, "HASH", INT2FIX(HASH));
   rb_define_const(cBisonParserTokens, "DOUBLE_HASH", INT2FIX(DOUBLE_HASH));
   rb_define_const(cBisonParserTokens, "KW_TOKEN", INT2FIX(KW_TOKEN));
+  rb_define_const(cBisonParserTokens, "KW_LEFT", INT2FIX(KW_LEFT));
+  rb_define_const(cBisonParserTokens, "KW_RIGHT", INT2FIX(KW_RIGHT));
   rb_define_const(cBisonParserTokens, "ACTIONS", INT2FIX(ACTIONS));
 
   rb_define_method(cBisonParser, "parse", bison_parser_parse, 0);

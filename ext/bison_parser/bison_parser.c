@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 22 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:339  */
+#line 23 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:339  */
 
 #include <ruby.h>
 #define YYSTYPE VALUE
@@ -109,7 +109,9 @@ extern int yydebug;
     HASH = 307,
     DOUBLE_HASH = 308,
     KW_TOKEN = 309,
-    ACTIONS = 310
+    KW_LEFT = 310,
+    KW_RIGHT = 311,
+    ACTIONS = 312
   };
 #endif
 
@@ -138,18 +140,18 @@ struct YYLTYPE
 
 int yyparse (VALUE __actions);
 /* "%code provides" blocks.  */
-#line 27 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:355  */
+#line 28 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:355  */
 
 static int yylex(YYSTYPE *, YYLTYPE *, VALUE);
 static void yyerror(YYLTYPE *, VALUE, const char *);
 
-#line 147 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:355  */
+#line 149 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:355  */
 
 
 
 /* Copy the second part of user declarations.  */
 
-#line 153 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:358  */
+#line 155 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -393,21 +395,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   19
+#define YYLAST   23
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  14
+#define YYNTOKENS  16
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  18
+#define YYNRULES  20
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  27
+#define YYNSTATES  31
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   311
+#define YYMAXUTOK   313
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -447,15 +449,16 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        3,     4,     5,     6,     7,     8,     9,    10,    11,    12,
-      13,     2
+      13,    14,    15,     2
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    35,    35,    47,    52,    62,    67,    77,    87,    92,
-     102,   113,   118,   125,   135,   141,   152,   157,   165
+       0,    36,    36,    48,    53,    63,    68,    78,    85,    92,
+     102,   107,   117,   128,   133,   140,   150,   156,   167,   172,
+     180
 };
 #endif
 
@@ -466,9 +469,9 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "IDENTIFIER", "STRING", "COLON",
   "SEMICOLON", "LBRACK", "RBRACK", "PIPE", "HASH", "DOUBLE_HASH",
-  "KW_TOKEN", "ACTIONS", "$accept", "grammar_file", "optional_code",
-  "token_list", "token", "grammar_rules", "grammar_rule", "components",
-  "component", "sequence", YY_NULLPTR
+  "KW_TOKEN", "KW_LEFT", "KW_RIGHT", "ACTIONS", "$accept", "grammar_file",
+  "optional_code", "token_list", "token", "grammar_rules", "grammar_rule",
+  "components", "component", "sequence", YY_NULLPTR
 };
 #endif
 
@@ -477,8 +480,8 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   311,   300,   301,   302,   303,   304,   305,   306,
-     307,   308,   309,   310
+       0,   256,   313,   300,   301,   302,   303,   304,   305,   306,
+     307,   308,   309,   310,   311,   312
 };
 # endif
 
@@ -487,7 +490,7 @@ static const yytype_uint16 yytoknum[] =
 #define yypact_value_is_default(Yystate) \
   (!!((Yystate) == (-10)))
 
-#define YYTABLE_NINF -17
+#define YYTABLE_NINF -19
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -496,9 +499,10 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -10,     6,     3,   -10,    -9,   -10,   -10,     4,     1,   -10,
-      10,    -5,   -10,   -10,    -3,   -10,    -4,   -10,    -2,   -10,
-     -10,     2,   -10,   -10,    13,     9,   -10
+     -10,     7,     4,   -10,    -9,   -10,   -10,     5,     8,    13,
+      -1,   -10,   -10,   -10,    12,     3,   -10,   -10,    -3,   -10,
+       0,   -10,    -2,   -10,   -10,    14,   -10,   -10,    16,    15,
+     -10
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -506,21 +510,22 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       5,     0,     0,     1,     0,     8,     6,     0,     3,     7,
-       0,     0,     2,     9,    11,     4,     0,    12,    14,    10,
-      16,    17,    15,    13,     0,     0,    18
+       5,     0,     0,     1,     0,    10,     6,     0,     0,     0,
+       3,     7,     8,     9,     0,     0,     2,    11,    13,     4,
+       0,    14,    16,    12,    18,    19,    17,    15,     0,     0,
+      20
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,   -10,   -10,   -10,   -10,   -10,   -10,   -10,    -1,   -10
+     -10,   -10,   -10,   -10,   -10,   -10,   -10,   -10,    -4,   -10
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,    12,     2,     6,     8,    13,    16,    17,    18
+      -1,     1,    16,     2,     6,    10,    17,    20,    21,    22
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -528,37 +533,42 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-     -16,    21,    19,     7,    10,    20,     3,     9,    15,    24,
-     -16,    22,    11,     4,     5,    14,    25,    26,     0,    23
+     -18,    25,    14,     7,     8,     9,    23,     3,    11,    24,
+      15,    12,   -18,    26,     4,     5,    13,    18,    19,    29,
+      27,    28,     0,    30
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     3,     6,    12,     3,     9,     0,     3,    13,     7,
-      13,    13,    11,    10,    11,     5,     3,     8,    -1,    20
+       3,     3,     3,    12,    13,    14,     6,     0,     3,     9,
+      11,     3,    15,    15,    10,    11,     3,     5,    15,     3,
+      24,     7,    -1,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    15,    17,     0,    10,    11,    18,    12,    19,     3,
-       3,    11,    16,    20,     5,    13,    21,    22,    23,     6,
-       9,     3,    13,    22,     7,     3,     8
+       0,    17,    19,     0,    10,    11,    20,    12,    13,    14,
+      21,     3,     3,     3,     3,    11,    18,    22,     5,    15,
+      23,    24,    25,     6,     9,     3,    15,    24,     7,     3,
+       8
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    14,    15,    16,    16,    17,    17,    18,    19,    19,
-      20,    21,    21,    21,    22,    22,    23,    23,    23
+       0,    16,    17,    18,    18,    19,    19,    20,    20,    20,
+      21,    21,    22,    23,    23,    23,    24,    24,    25,    25,
+      25
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     4,     0,     2,     0,     2,     3,     0,     2,
-       4,     0,     1,     3,     1,     2,     0,     2,     5
+       0,     2,     4,     0,     2,     0,     2,     3,     3,     3,
+       0,     2,     4,     0,     1,     3,     1,     2,     0,     2,
+       5
 };
 
 
@@ -1336,7 +1346,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 36 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 37 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@tokens"), rb_ary_new3(2, INT2FIX((yylsp[-3]).first_line), INT2FIX((yylsp[-3]).first_column)));
@@ -1344,161 +1354,181 @@ yyreduce:
     rb_ivar_set(__actions, rb_intern("@code"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_grammar_file_a94c71c90dcf6de40d17336b9d39db58"), 3, (yyvsp[-3]), (yyvsp[-1]), (yyvsp[0]));
   }
-#line 1348 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1358 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 3:
-#line 47 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 48 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_optional_code_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
-#line 1357 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1367 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 4:
-#line 53 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 54 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@actions"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_1_optional_code_1359d45d91e668b6af09d4ac3c336a88"), 1, (yyvsp[0]));
   }
-#line 1367 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1377 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 5:
-#line 62 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 63 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_token_list_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
-#line 1376 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1386 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 68 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 69 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@list"), rb_ary_new3(2, INT2FIX((yylsp[-1]).first_line), INT2FIX((yylsp[-1]).first_column)));
     rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_1_token_list_21a28d2acdd128c24843b772a9881f2d"), 2, (yyvsp[-1]), (yyvsp[0]));
   }
-#line 1387 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1397 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 7:
-#line 78 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 79 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, (yyvsp[0]));
   }
-#line 1397 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1407 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 8:
-#line 87 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+#line 86 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
-    (yyval) = rb_funcall(__actions, rb_intern("_0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b"), 0);
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
+    (yyval) = rb_funcall(__actions, rb_intern("_1_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, (yyvsp[0]));
   }
-#line 1406 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1417 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
   case 9:
 #line 93 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
+    (yyval) = rb_funcall(__actions, rb_intern("_2_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, (yyvsp[0]));
+  }
+#line 1427 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+    break;
+
+  case 10:
+#line 102 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+    {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
+    (yyval) = rb_funcall(__actions, rb_intern("_0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b"), 0);
+  }
+#line 1436 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+    break;
+
+  case 11:
+#line 108 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+    {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@list"), rb_ary_new3(2, INT2FIX((yylsp[-1]).first_line), INT2FIX((yylsp[-1]).first_column)));
     rb_ivar_set(__actions, rb_intern("@rule"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_1_grammar_rules_d4b402a4ddf06c5292ab917a96fe105c"), 2, (yyvsp[-1]), (yyvsp[0]));
   }
-#line 1417 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1447 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 10:
-#line 103 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 12:
+#line 118 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX((yylsp[-3]).first_line), INT2FIX((yylsp[-3]).first_column)));
     rb_ivar_set(__actions, rb_intern("@components"), rb_ary_new3(2, INT2FIX((yylsp[-1]).first_line), INT2FIX((yylsp[-1]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_grammar_rule_bce7f6337f3284ba4a3537cc1d642c28"), 2, (yyvsp[-3]), (yyvsp[-1]));
   }
-#line 1428 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1458 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 11:
-#line 113 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 13:
+#line 128 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_components_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
-#line 1437 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1467 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 12:
-#line 119 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 14:
+#line 134 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@component"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_1_components_0c3a5ada7333900791423d7f17efa5e8"), 1, (yyvsp[0]));
   }
-#line 1447 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1477 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 13:
-#line 126 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 15:
+#line 141 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX((yylsp[-2]).first_line), INT2FIX((yylsp[-2]).first_column)));
     rb_ivar_set(__actions, rb_intern("@component"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_2_components_337d420d17c37c9e4219b6a95f7561c0"), 2, (yyvsp[-2]), (yyvsp[0]));
   }
-#line 1458 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1488 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 14:
-#line 136 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 16:
+#line 151 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     (yyval) = (yyvsp[0]);
   }
-#line 1467 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1497 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 15:
-#line 142 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 17:
+#line 157 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX((yylsp[-1]).first_line), INT2FIX((yylsp[-1]).first_column)));
     rb_ivar_set(__actions, rb_intern("@action"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_1_component_802dc4bb99cad8bfa7c7bf22b7349862"), 2, (yyvsp[-1]), (yyvsp[0]));
   }
-#line 1478 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1508 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 16:
-#line 152 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 18:
+#line 167 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_0_sequence_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
-#line 1487 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1517 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 17:
-#line 158 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 19:
+#line 173 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX((yylsp[-1]).first_line), INT2FIX((yylsp[-1]).first_column)));
     rb_ivar_set(__actions, rb_intern("@follower"), rb_ary_new3(2, INT2FIX((yylsp[0]).first_line), INT2FIX((yylsp[0]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_1_sequence_4b2903c3aeb37d22d413a53653d0df28"), 2, (yyvsp[-1]), (yyvsp[0]));
   }
-#line 1498 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1528 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
-  case 18:
-#line 166 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
+  case 20:
+#line 181 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1661  */
     {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX((yyloc).first_line), INT2FIX((yyloc).first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX((yylsp[-4]).first_line), INT2FIX((yylsp[-4]).first_column)));
@@ -1506,11 +1536,11 @@ yyreduce:
     rb_ivar_set(__actions, rb_intern("@tag"), rb_ary_new3(2, INT2FIX((yylsp[-1]).first_line), INT2FIX((yylsp[-1]).first_column)));
     (yyval) = rb_funcall(__actions, rb_intern("_2_sequence_68f2380aa0f3a7de0fb9b3482705a54c"), 3, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-1]));
   }
-#line 1510 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1540 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
     break;
 
 
-#line 1514 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
+#line 1544 "../../../../ext/bison_parser/bison_parser.c" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1745,7 +1775,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 176 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1906  */
+#line 191 "../../../../ext/bison_parser/bison_parser.y" /* yacc.c:1906  */
 
 
 static VALUE cBisonParser;
@@ -1769,6 +1799,8 @@ void Init_bison_parser(void) {
   rb_define_const(cBisonParserTokens, "HASH", INT2FIX(HASH));
   rb_define_const(cBisonParserTokens, "DOUBLE_HASH", INT2FIX(DOUBLE_HASH));
   rb_define_const(cBisonParserTokens, "KW_TOKEN", INT2FIX(KW_TOKEN));
+  rb_define_const(cBisonParserTokens, "KW_LEFT", INT2FIX(KW_LEFT));
+  rb_define_const(cBisonParserTokens, "KW_RIGHT", INT2FIX(KW_RIGHT));
   rb_define_const(cBisonParserTokens, "ACTIONS", INT2FIX(ACTIONS));
 
   rb_define_method(cBisonParser, "parse", bison_parser_parse, 0);

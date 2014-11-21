@@ -26,6 +26,14 @@ class BisonParser
       Bison::Token.new(name)
     end
 
+    def _1_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
+      Bison::Token.new(name, :left)
+    end
+
+    def _2_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
+      Bison::Token.new(name, :right)
+    end
+
     def _0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b()
       []
     end

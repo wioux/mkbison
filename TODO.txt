@@ -1,4 +1,3 @@
-  * Implement %left, %right
   * Write to temp file, then move into place
   * Add checks for every nonterminal defined
   * Move base module into the c extension

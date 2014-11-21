@@ -1,8 +1,11 @@
 
 <% tokens.each_with_index do |token, i| -%>
-%token <%= token.name %><%= "\t" * (4 - (token.name.length+7)/8)%><%= 300 + i %>
-<% end %>
+%token	<%= token.name %><%= "\t" * (4 - token.name.length/8)%><%= 300 + i %>
+<% end -%>
 
+<% tokens.select{|t| t.left? || t.right?}.each do |token| -%>
+<%= token.left? ? '%left' : '%right' %>	<%= token.name %>
+<% end -%>
 
 %define api.pure true
 %define parse.error verbose
