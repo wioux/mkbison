@@ -1,2 +1,3 @@
+  * Support multiple tokens on %left/%right lines, for same precedence
   * Write to temp file, then move into place
   * Move base module into the c extension
