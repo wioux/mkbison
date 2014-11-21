@@ -1,11 +1,13 @@
 
 require 'digest'
+require 'tempfile'
 
 module Bison
   class Sequence
     attr_accessor :rule, :index
     attr_reader :elements
     attr_accessor :action
+    attr_accessor :action_location
     
     def initialize
       @elements = []
@@ -22,6 +24,23 @@ module Bison
       end.compact
       
       Hash[tags]
+    end
+
+    def action_errors
+      return nil unless action
+
+      tmp = Tempfile.new('action-src.rb').tap do |tmp|
+        action_location[0].times{ tmp.puts }
+        tmp.puts(action)
+        tmp.close
+      end
+
+      errors = `ruby -c "#{tmp.path}" 2>&1`
+      if $?.success?
+        return nil
+      else
+        return errors.gsub(tmp.path, '-')
+      end
     end
 
     def action_name

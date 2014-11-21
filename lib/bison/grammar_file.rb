@@ -18,6 +18,10 @@ module Bison
           errors << "#{el.location.join('.')}: #{el.name} is not defined"
         end
       end
+      rules.map(&:components).flatten.each do |seq|
+        err = seq.action_errors
+        errors << err unless err.nil?
+      end
       abort(errors.join("\n")) unless errors.empty?
     end
 

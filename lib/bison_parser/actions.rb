@@ -59,7 +59,7 @@ class BisonParser
     end
 
     def _1_component_802dc4bb99cad8bfa7c7bf22b7349862(sequence, action)
-      sequence.tap{ |s| s.action = action }
+      sequence.tap{ |s| s.action = action; s.action_location = @action }
     end
 
     def _0_sequence_99914b932bd37a50b983c5e7c90ae93b()

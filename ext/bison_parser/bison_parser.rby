@@ -72,7 +72,7 @@ component:
   sequence
 |
   sequence[sequence] ACTIONS[action]
-  { sequence.tap{ |s| s.action = action } }
+  { sequence.tap{ |s| s.action = action; s.action_location = @action } }
 ;
 
 sequence:
