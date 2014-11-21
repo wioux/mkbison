@@ -10,6 +10,17 @@ module Bison
       @tokens, @rules, @code = tokens, rules, code
     end
 
+    def validate
+      errors = []
+      symbols = tokens.map(&:name) + rules.map(&:name)
+      rules.map(&:components).flatten.map(&:elements).flatten.each do |el|
+        unless symbols.include?(el.name)
+          errors << "#{el.location.join('.')}: #{el.name} is not defined"
+        end
+      end
+      abort(errors.join("\n")) unless errors.empty?
+    end
+
     def print_class(out=$stdout)
       template = File.expand_path('../../../templates/class.rb.erb', __FILE__)
       out.puts(ERB.new(File.read(template), nil, '-').result(binding))

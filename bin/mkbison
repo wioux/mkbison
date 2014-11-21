@@ -41,6 +41,8 @@ rescue BisonParser::Error => e
   abort(e.message)
 end
 
+bison.validate
+
 bison.name = options.name
 libdir = "#{options.output}/lib/#{underscore(options.name)}"
 extdir = "#{options.output}/ext/#{underscore(options.name)}"
