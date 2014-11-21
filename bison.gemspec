@@ -7,9 +7,8 @@ Gem::Specification.new do |spec|
   spec.name          = "bison"
   spec.version       = Bison::VERSION
   spec.authors       = ["Peter Woo"]
-  spec.email         = ["petersnowdonwoo@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ["peter@wioux.net"]
+  spec.summary       = %q{err... Write a short summary. Required.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
