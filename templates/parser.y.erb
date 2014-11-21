@@ -83,6 +83,7 @@ static int yylex(YYSTYPE *lval, YYLTYPE *lloc, VALUE actions) {
 
   parser = rb_funcall(actions, rb_intern("parser"), 0);
 
+  rb_funcall(parser, rb_intern("lex_value="), 1, Qnil);
   rb_funcall(parser, rb_intern("token_row="), 1, INT2FIX(lloc->last_line));
   rb_funcall(parser, rb_intern("token_col="), 1, INT2FIX(lloc->last_column));
 
