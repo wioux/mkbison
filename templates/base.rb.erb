@@ -8,7 +8,7 @@ class <%= name %>
       if String === io
         io = ::File.open(io, 'r')
       end
-      @io, @row, @col = io, 0, 0
+      @io, @row, @col = io, 1, 0
     end
 
     def read
