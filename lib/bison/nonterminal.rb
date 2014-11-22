@@ -3,6 +3,7 @@ module Bison
     attr_reader :name
     attr_reader :tag
     attr_accessor :location
+    attr_accessor :sequence
 
     def initialize(name, tag=nil)
       @name = name

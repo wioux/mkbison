@@ -42,6 +42,7 @@ grammar_file:
     rb_ivar_set(__actions, rb_intern("@code"), rb_ary_new3(2, INT2FIX(@4.first_line), INT2FIX(@4.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_grammar_file_a94c71c90dcf6de40d17336b9d39db58"), 3, $1, $3, $4);
   }
+
 ;
 
 optional_code:
@@ -50,6 +51,7 @@ optional_code:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_optional_code_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
+
 |
   DOUBLE_HASH ACTIONS 
   {
@@ -57,6 +59,7 @@ optional_code:
     rb_ivar_set(__actions, rb_intern("@actions"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_optional_code_1359d45d91e668b6af09d4ac3c336a88"), 1, $2);
   }
+
 ;
 
 token_list:
@@ -65,6 +68,7 @@ token_list:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_token_list_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
+
 |
   token_list token 
   {
@@ -73,6 +77,7 @@ token_list:
     rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_token_list_21a28d2acdd128c24843b772a9881f2d"), 2, $1, $2);
   }
+
 ;
 
 token:
@@ -82,6 +87,7 @@ token:
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
+
 |
   HASH KW_LEFT IDENTIFIER 
   {
@@ -89,6 +95,7 @@ token:
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
+
 |
   HASH KW_RIGHT IDENTIFIER 
   {
@@ -96,6 +103,7 @@ token:
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_2_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
+
 |
   token NUMBER 
   {
@@ -104,6 +112,7 @@ token:
     rb_ivar_set(__actions, rb_intern("@num"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_3_token_445055bddb5840e621fa399faa56aefc"), 2, $1, $2);
   }
+
 ;
 
 grammar_rules:
@@ -112,6 +121,7 @@ grammar_rules:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
+
 |
   grammar_rules grammar_rule 
   {
@@ -120,6 +130,7 @@ grammar_rules:
     rb_ivar_set(__actions, rb_intern("@rule"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_grammar_rules_d4b402a4ddf06c5292ab917a96fe105c"), 2, $1, $2);
   }
+
 ;
 
 grammar_rule:
@@ -130,6 +141,7 @@ grammar_rule:
     rb_ivar_set(__actions, rb_intern("@components"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_grammar_rule_bce7f6337f3284ba4a3537cc1d642c28"), 2, $1, $3);
   }
+
 ;
 
 components:
@@ -138,6 +150,7 @@ components:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_components_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
+
 |
   sequence 
   {
@@ -145,6 +158,7 @@ components:
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_components_2403a823f1a9854a29da7cf64f191fbe"), 1, $1);
   }
+
 |
   components PIPE sequence 
   {
@@ -153,6 +167,7 @@ components:
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_2_components_62da044340939f02b6c0b52917617e17"), 2, $1, $3);
   }
+
 ;
 
 sequence:
@@ -161,6 +176,7 @@ sequence:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_sequence_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
+
 |
   sequence ACTIONS 
   {
@@ -169,6 +185,7 @@ sequence:
     rb_ivar_set(__actions, rb_intern("@code"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_sequence_512ceffccf6bb7565046f90d6d7762ad"), 2, $1, $2);
   }
+
 |
   sequence IDENTIFIER 
   {
@@ -177,6 +194,7 @@ sequence:
     rb_ivar_set(__actions, rb_intern("@follower"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_2_sequence_4b2903c3aeb37d22d413a53653d0df28"), 2, $1, $2);
   }
+
 |
   sequence IDENTIFIER LBRACK IDENTIFIER RBRACK 
   {
@@ -186,6 +204,7 @@ sequence:
     rb_ivar_set(__actions, rb_intern("@tag"), rb_ary_new3(2, INT2FIX(@4.first_line), INT2FIX(@4.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_3_sequence_68f2380aa0f3a7de0fb9b3482705a54c"), 3, $1, $2, $4);
   }
+
 ;
 
 

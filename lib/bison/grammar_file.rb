@@ -19,8 +19,10 @@ module Bison
         end
       end
       rules.map(&:components).flatten.each do |seq|
-        err = seq.action_errors
-        errors << err unless err.nil?
+        seq.elements.grep(Bison::Action).each do |action|
+          err = action.errors
+          errors << err unless err.nil?
+        end
       end
       abort(errors.join("\n")) unless errors.empty?
     end

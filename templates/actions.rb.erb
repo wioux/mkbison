@@ -1,9 +1,9 @@
 class <%= name %>
   class Actions
     attr_accessor :parser, :result
-<% rules.map(&:components).flatten.select(&:action).each_with_index do |seq, i| %>
-    def <%= seq.action_name %>(<%= seq.tags.values.join(', ') %>)
-      <%= seq.action.code.strip %>
+<% rules.map(&:components).flatten.map(&:elements).flatten.grep(Bison::Action).each_with_index do |action, i| %>
+    def <%= action.name %>(<%= action.predecessor_tags.values.join(', ') %>)
+      <%= action.code.strip %>
     end
 <% end -%>
   end
