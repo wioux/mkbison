@@ -8,5 +8,9 @@ module Bison
       @name = name
       @tag = tag
     end
+
+    def to_bison
+      name
+    end
   end
 end

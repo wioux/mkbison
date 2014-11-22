@@ -63,23 +63,18 @@ grammar_rule:
 
 components:
   { [] }
-| component[component]
-  { [component] }
+| sequence[sequence]
+  { [sequence] }
 |
-  components[sequence] PIPE component[component]
-  { sequence << component }
+  components[sequences] PIPE sequence[sequence]
+  { sequences << sequence }
 ;
 
-
-component:
-  sequence
-|
-  sequence[sequence] ACTIONS[action]
-  { sequence.tap{ |s| s.action = action; s.action_location = @action } }
-;
 
 sequence:
   { Bison::Sequence.new }
+| sequence[sequence] ACTIONS[code]
+  { sequence << Bison::Action.new(code).tap{ |a| a.location = @code } }
 |
   sequence[sequence] IDENTIFIER[follower]
   { sequence << Bison::Nonterminal.new(follower).tap{ |x| x.location = @follower } }

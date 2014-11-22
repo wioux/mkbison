@@ -34,7 +34,7 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
 %%
 
 grammar_file:
-  token_list DOUBLE_HASH grammar_rules optional_code
+  token_list DOUBLE_HASH grammar_rules optional_code 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@tokens"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
@@ -45,13 +45,13 @@ grammar_file:
 ;
 
 optional_code:
-
+  
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_optional_code_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
 |
-  DOUBLE_HASH ACTIONS
+  DOUBLE_HASH ACTIONS 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@actions"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
@@ -60,13 +60,13 @@ optional_code:
 ;
 
 token_list:
-
+  
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_token_list_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
 |
-  token_list token
+  token_list token 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@list"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
@@ -76,28 +76,28 @@ token_list:
 ;
 
 token:
-  HASH KW_TOKEN IDENTIFIER
+  HASH KW_TOKEN IDENTIFIER 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
 |
-  HASH KW_LEFT IDENTIFIER
+  HASH KW_LEFT IDENTIFIER 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_1_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
 |
-  HASH KW_RIGHT IDENTIFIER
+  HASH KW_RIGHT IDENTIFIER 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_2_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
   }
 |
-  token NUMBER
+  token NUMBER 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
@@ -107,13 +107,13 @@ token:
 ;
 
 grammar_rules:
-
+  
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
 |
-  grammar_rules grammar_rule
+  grammar_rules grammar_rule 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@list"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
@@ -123,7 +123,7 @@ grammar_rules:
 ;
 
 grammar_rule:
-  IDENTIFIER COLON components SEMICOLON
+  IDENTIFIER COLON components SEMICOLON 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
@@ -133,66 +133,58 @@ grammar_rule:
 ;
 
 components:
-
+  
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_components_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
 |
-  component
-  {
-    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
-    rb_ivar_set(__actions, rb_intern("@component"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_1_components_0c3a5ada7333900791423d7f17efa5e8"), 1, $1);
-  }
-|
-  components PIPE component
+  sequence 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
-    rb_ivar_set(__actions, rb_intern("@component"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_2_components_337d420d17c37c9e4219b6a95f7561c0"), 2, $1, $3);
-  }
-;
-
-component:
-  sequence
-  {
-    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
-    $$ = $1;
+    $$ = rb_funcall(__actions, rb_intern("_1_components_2403a823f1a9854a29da7cf64f191fbe"), 1, $1);
   }
 |
-  sequence ACTIONS
+  components PIPE sequence 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
-    rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
-    rb_ivar_set(__actions, rb_intern("@action"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_1_component_802dc4bb99cad8bfa7c7bf22b7349862"), 2, $1, $2);
+    rb_ivar_set(__actions, rb_intern("@sequences"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
+    rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_2_components_62da044340939f02b6c0b52917617e17"), 2, $1, $3);
   }
 ;
 
 sequence:
-
+  
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_0_sequence_99914b932bd37a50b983c5e7c90ae93b"), 0);
   }
 |
-  sequence IDENTIFIER
+  sequence ACTIONS 
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
+    rb_ivar_set(__actions, rb_intern("@code"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_1_sequence_512ceffccf6bb7565046f90d6d7762ad"), 2, $1, $2);
+  }
+|
+  sequence IDENTIFIER 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
     rb_ivar_set(__actions, rb_intern("@follower"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_1_sequence_4b2903c3aeb37d22d413a53653d0df28"), 2, $1, $2);
+    $$ = rb_funcall(__actions, rb_intern("_2_sequence_4b2903c3aeb37d22d413a53653d0df28"), 2, $1, $2);
   }
 |
-  sequence IDENTIFIER LBRACK IDENTIFIER RBRACK
+  sequence IDENTIFIER LBRACK IDENTIFIER RBRACK 
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@sequence"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
     rb_ivar_set(__actions, rb_intern("@follower"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
     rb_ivar_set(__actions, rb_intern("@tag"), rb_ary_new3(2, INT2FIX(@4.first_line), INT2FIX(@4.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_2_sequence_68f2380aa0f3a7de0fb9b3482705a54c"), 3, $1, $2, $4);
+    $$ = rb_funcall(__actions, rb_intern("_3_sequence_68f2380aa0f3a7de0fb9b3482705a54c"), 3, $1, $2, $4);
   }
 ;
 

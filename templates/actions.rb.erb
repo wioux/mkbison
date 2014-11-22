@@ -3,7 +3,7 @@ class <%= name %>
     attr_accessor :parser, :result
 <% rules.map(&:components).flatten.select(&:action).each_with_index do |seq, i| %>
     def <%= seq.action_name %>(<%= seq.tags.values.join(', ') %>)
-      <%= seq.action.strip %>
+      <%= seq.action.code.strip %>
     end
 <% end -%>
   end

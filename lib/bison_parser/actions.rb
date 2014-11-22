@@ -54,27 +54,27 @@ class BisonParser
       []
     end
 
-    def _1_components_0c3a5ada7333900791423d7f17efa5e8(component)
-      [component]
+    def _1_components_2403a823f1a9854a29da7cf64f191fbe(sequence)
+      [sequence]
     end
 
-    def _2_components_337d420d17c37c9e4219b6a95f7561c0(sequence, component)
-      sequence << component
-    end
-
-    def _1_component_802dc4bb99cad8bfa7c7bf22b7349862(sequence, action)
-      sequence.tap{ |s| s.action = action; s.action_location = @action }
+    def _2_components_62da044340939f02b6c0b52917617e17(sequences, sequence)
+      sequences << sequence
     end
 
     def _0_sequence_99914b932bd37a50b983c5e7c90ae93b()
       Bison::Sequence.new
     end
 
-    def _1_sequence_4b2903c3aeb37d22d413a53653d0df28(sequence, follower)
+    def _1_sequence_512ceffccf6bb7565046f90d6d7762ad(sequence, code)
+      sequence << Bison::Action.new(code).tap{ |a| a.location = @code }
+    end
+
+    def _2_sequence_4b2903c3aeb37d22d413a53653d0df28(sequence, follower)
       sequence << Bison::Nonterminal.new(follower).tap{ |x| x.location = @follower }
     end
 
-    def _2_sequence_68f2380aa0f3a7de0fb9b3482705a54c(sequence, follower, tag)
+    def _3_sequence_68f2380aa0f3a7de0fb9b3482705a54c(sequence, follower, tag)
       sequence << Bison::Nonterminal.new(follower, tag).tap{ |x| x.location = @follower }
     end
   end

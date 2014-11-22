@@ -6,8 +6,6 @@ module Bison
   class Sequence
     attr_accessor :rule, :index
     attr_reader :elements
-    attr_accessor :action
-    attr_accessor :action_location
     
     def initialize
       @elements = []
@@ -20,17 +18,21 @@ module Bison
 
     def tags
       tags = elements.each_with_index.map do |e, i|
-        [i+1, e.tag] if e.tag
+        [i+1, e.tag] if (Bison::Nonterminal === e) && e.tag
       end.compact
       
       Hash[tags]
     end
 
+    def action
+      elements.grep(Bison::Action)[-1]
+    end
+    
     def action_errors
       return nil unless action
 
       tmp = Tempfile.new('action-src.rb').tap do |tmp|
-        action_location[0].times{ tmp.puts }
+        action.location[0].times{ tmp.puts }
         tmp.puts(action)
         tmp.close
       end

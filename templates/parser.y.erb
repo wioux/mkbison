@@ -33,7 +33,7 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
 <%= rule.name %>:
 <% rule.components.each_with_index do |seq, i| -%>
 <%= "|\n" unless i.zero? -%>
-<%= '  '+seq.elements.map(&:name).join(' ') unless seq.elements.empty? %>
+<%= '  '+seq.elements.map(&:to_bison).join(' ') unless seq.elements.empty? %>
   {
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
 <% seq.tags.each do |i, name| -%>

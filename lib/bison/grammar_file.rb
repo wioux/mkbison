@@ -14,7 +14,7 @@ module Bison
       errors = []
       symbols = tokens.map(&:name) + rules.map(&:name)
       rules.map(&:components).flatten.map(&:elements).flatten.each do |el|
-        unless symbols.include?(el.name)
+        unless !(Bison::Nonterminal === el) || symbols.include?(el.name)
           errors << "#{el.location.join('.')}: #{el.name} is not defined"
         end
       end
