@@ -34,6 +34,13 @@ static void yyerror(YYLTYPE *, VALUE, const char *);
 <% rule.components.each_with_index do |seq, i| -%>
 <%= "|\n" unless i.zero? -%>
 <%= '  '+seq.elements.map(&:to_bison).join(' ') unless seq.elements.empty? %>
+<% if !(Bison::Action === seq.elements[-1]) -%>
+<% if seq.elements.grep(Bison::Nonterminal).empty? -%>
+  { $$ = Qnil; }
+<% else -%>
+  { $$ = $<%= seq.elements.find_index{ |x| Bison::Nonterminal === x } + 1%>; }
+<% end %>
+<% end -%>
 <% end -%>
 ;
 
