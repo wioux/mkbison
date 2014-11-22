@@ -46,6 +46,13 @@ class BisonParser
       end
       self.lex_value = action
       return Tokens::ACTIONS
+    when '0'..'9'
+      number = c
+      while (c = self.peak) && ('0'..'9').include?(c)
+        number << self.read
+      end
+      self.lex_value = number.to_i
+      return Tokens::NUMBER
     end
 
     if c =~ /\w/

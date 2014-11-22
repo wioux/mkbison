@@ -1,6 +1,10 @@
 
-<% tokens.each_with_index do |token, i| -%>
-%token	<%= token.name %><%= "\t" * (4 - token.name.length/8)%><%= 300 + i %>
+<% tokens.each do |token| -%>
+<% if token.number -%>
+%token	<%= token.name %><%= "\t" * (4 - token.name.length/8)%><%= token.number %>
+<% else -%>
+%token	<%= token.name %>
+<% end -%>
 <% end -%>
 
 <% tokens.select{|t| t.left? || t.right?}.each do |token| -%>

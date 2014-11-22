@@ -1,5 +1,6 @@
 
 %token IDENTIFIER
+%token NUMBER
 %token STRING
 %token COLON
 %token SEMICOLON
@@ -44,6 +45,8 @@ token:
 |
   HASH KW_RIGHT IDENTIFIER[name]
   { Bison::Token.new(name, :right) }
+| token[token] NUMBER[num]
+  { token.tap{ |t| t.number = num } }
 ;
 
 grammar_rules:
@@ -134,6 +137,13 @@ class BisonParser
       end
       self.lex_value = action
       return Tokens::ACTIONS
+    when '0'..'9'
+      number = c
+      while (c = self.peak) && ('0'..'9').include?(c)
+        number << self.read
+      end
+      self.lex_value = number.to_i
+      return Tokens::NUMBER
     end
 
     if c =~ /\w/

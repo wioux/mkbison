@@ -1,17 +1,18 @@
 
-%token	IDENTIFIER			300
-%token	STRING				301
-%token	COLON				302
-%token	SEMICOLON			303
-%token	LBRACK				304
-%token	RBRACK				305
-%token	PIPE				306
-%token	HASH				307
-%token	DOUBLE_HASH			308
-%token	KW_TOKEN			309
-%token	KW_LEFT				310
-%token	KW_RIGHT			311
-%token	ACTIONS				312
+%token	IDENTIFIER
+%token	NUMBER
+%token	STRING
+%token	COLON
+%token	SEMICOLON
+%token	LBRACK
+%token	RBRACK
+%token	PIPE
+%token	HASH
+%token	DOUBLE_HASH
+%token	KW_TOKEN
+%token	KW_LEFT
+%token	KW_RIGHT
+%token	ACTIONS
 
 
 %define api.pure true
@@ -94,6 +95,14 @@ token:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
     $$ = rb_funcall(__actions, rb_intern("_2_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
+  }
+|
+  token NUMBER
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
+    rb_ivar_set(__actions, rb_intern("@num"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_3_token_445055bddb5840e621fa399faa56aefc"), 2, $1, $2);
   }
 ;
 
@@ -202,6 +211,7 @@ void Init_bison_parser(void) {
   cBisonParserActions = rb_define_class_under(cBisonParser, "Actions", rb_cObject);
 
   rb_define_const(cBisonParserTokens, "IDENTIFIER", INT2FIX(IDENTIFIER));
+  rb_define_const(cBisonParserTokens, "NUMBER", INT2FIX(NUMBER));
   rb_define_const(cBisonParserTokens, "STRING", INT2FIX(STRING));
   rb_define_const(cBisonParserTokens, "COLON", INT2FIX(COLON));
   rb_define_const(cBisonParserTokens, "SEMICOLON", INT2FIX(SEMICOLON));

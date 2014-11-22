@@ -34,6 +34,10 @@ class BisonParser
       Bison::Token.new(name, :right)
     end
 
+    def _3_token_445055bddb5840e621fa399faa56aefc(token, num)
+      token.tap{ |t| t.number = num }
+    end
+
     def _0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b()
       []
     end

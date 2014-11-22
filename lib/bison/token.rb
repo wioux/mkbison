@@ -1,6 +1,7 @@
 module Bison
   class Token
     attr_accessor :name
+    attr_accessor :number
     attr_accessor :associativity
     
     def initialize(name, assoc=nil)
