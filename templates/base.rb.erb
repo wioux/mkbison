@@ -1,13 +1,14 @@
 class <%= name %>
   attr_reader :io
   attr_accessor :lex_value, :token_row, :token_col, :row, :col
-  attr_accessor :result
+  attr_accessor :source, :result
 
   module Base
     def initialize(io)
       if String === io
         io = ::File.open(io, 'r')
       end
+      @source = io.respond_to?(:path) ? io.path : nil
       @io, @row, @col = io, 1, 0
     end
 
@@ -32,7 +33,7 @@ class <%= name %>
     end
 
     def error(msg, row, col)
-      raise Error.new(msg, row, col)
+      raise Error.new(msg, source, row, col)
     end
   end
 
@@ -40,8 +41,9 @@ class <%= name %>
 
   class Error < ::Exception
     attr_reader :message
-    def initialize(msg, row, col)
-      @message = "#{row}.#{col}: #{msg}"
+    def initialize(msg, source, row, col)
+      source ||= '-'
+      @message = "#{source}:#{row}.#{col} #{msg}"
     end
   end
 end
