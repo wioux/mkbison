@@ -99,7 +99,16 @@ class BisonParser
     end
 
     # skip space
-    while (c = self.read) && c =~ /\s/
+    while true
+      while (c = self.read) && c =~ /\s/
+      end
+
+      if c == '#'
+        while (char = self.read) && char != "\n"
+        end
+      else
+        break
+      end
     end
     
     return nil unless c
