@@ -132,14 +132,14 @@ Once we have that, we can compile our extension simply by running
     $ rake compile
 
 ## TODO
+  * Add tests
   * Automatically create Rakefile task
-
-  * Seems like you can hit EOF in the middle of action block and get wrong error msg
-  * Benchmark -- what takes so long on the koa grammar?
   * Write to temp files, then move them into place
   * Move base module into the c extension and document the lexing helpers
+  * Seems like you can hit EOF in the middle of action block and get wrong error msg
+  * Benchmark -- what takes so long on the koa grammar?
 
-Not all Bison features are supported yet.
+Not all Bison features are supported yet...
 
 ## Contributing
 
