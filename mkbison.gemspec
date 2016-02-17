@@ -1,14 +1,13 @@
-# coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'bison/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "bison"
+  spec.name          = "mkbison"
   spec.version       = Bison::VERSION
   spec.authors       = ["Peter Woo"]
   spec.email         = ["peter@wioux.net"]
-  spec.summary       = %q{err... Write a short summary. Required.}
+  spec.summary       = %q{Tool to generate bison parser C extensions}
   spec.homepage      = ""
   spec.license       = "MIT"
 
