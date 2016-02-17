@@ -3,7 +3,7 @@ require 'mkmf'
 output = "#{File.dirname(__FILE__)}/<%= uname %>.c"
 bison_file = "#{File.dirname(__FILE__)}/<%= uname %>.y"
 
-bison = ENV['BISON_PATH'] || 'bison'
-system(bison, '-o', output, bison_file)
+bison = find_executable(ENV['BISON_PATH'] || 'bison')
+system(bison, '-o', output, bison_file) or abort("bison command failed")
 
 create_makefile '<%= uname %>/<%= uname %>'

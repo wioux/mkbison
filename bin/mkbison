@@ -3,11 +3,14 @@
 lib = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'bison'
 require 'fileutils'
 require 'tempfile'
 require 'optparse'
 require 'ostruct'
+
+require 'cocaine'
+
+require 'bison'
 
 def underscore(name)
   name.gsub(/([a-z])([A-Z])/, '\1_\2').downcase
@@ -66,6 +69,14 @@ bison.print_class(ruby_file)
 
 # Do a dry run
 Tempfile.new('bison-output.c').tap do |output|
-  bison = ENV['BISON_PATH'] || 'bison'
-  system(bison, '-o', output.path, bison_file.path)
+  bison = Cocaine::CommandLine.new(ENV['BISON_PATH'] || 'bison', '-o :out :in')
+  begin
+    bison.run(in: bison_file.path, out: output.path)
+  rescue Cocaine::CommandNotFoundError => e
+    warn("The bison command was not found on this system. " +
+         "Make sure to install it before attempting rake compile.")
+  rescue Cocaine::ExitStatusError => e
+    warn(e.message)
+    exit(1)
+  end
 end
