@@ -72,6 +72,7 @@ Tempfile.new('bison-output.c').tap do |output|
   bison = Cocaine::CommandLine.new(ENV['BISON_PATH'] || 'bison', '-o :out :in')
   begin
     bison.run(in: bison_file.path, out: output.path)
+    warn bison.command_error_output
   rescue Cocaine::CommandNotFoundError => e
     warn("The bison command was not found on this system. " +
          "Make sure to install it before attempting rake compile.")
