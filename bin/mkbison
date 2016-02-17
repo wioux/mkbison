@@ -66,5 +66,6 @@ bison.print_class(ruby_file)
 
 # Do a dry run
 Tempfile.new('bison-output.c').tap do |output|
-  system('bison', '-o', output.path, bison_file.path)
+  bison = ENV['BISON_PATH'] || 'bison'
+  system(bison, '-o', output.path, bison_file.path)
 end
