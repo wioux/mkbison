@@ -1,6 +1,9 @@
 %token NUMBER
+%token LPAREN
+%token RPAREN
 
-%left OP_PLUS OP_MINUS
+%left OP_PLUS  OP_MINUS
+%left OP_TIMES OP_OVER
 
 %%
 
@@ -11,10 +14,14 @@ arithmetic:
 
 expression :
   NUMBER
-| OP_MINUS NUMBER[x]
+| OP_MINUS expression[x]
   { -x }
+| LPAREN expression[x] RPAREN
+  { x }
 | addition
 | subtraction
+| multiplication
+| division
 ;
 
 addition :
@@ -25,6 +32,16 @@ addition :
 subtraction :
   expression[left] OP_MINUS expression[right]
   { left - right }
+;
+
+multiplication:
+  expression[left] OP_TIMES expression[right]
+  { left * right }
+;
+
+division:
+  expression[left] OP_OVER expression[right]
+  { left / right }
 ;
 
 %%
@@ -43,6 +60,18 @@ class Arithmetic
 
     when '-'
       return Tokens::OP_MINUS
+
+    when '*'
+      return Tokens::OP_TIMES
+
+    when '/'
+      return Tokens::OP_OVER
+
+    when '('
+      return Tokens::LPAREN
+
+    when ')'
+      return Tokens::RPAREN
 
     else
       return nil
