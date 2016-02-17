@@ -54,15 +54,11 @@ class BisonParser
       Bison::Rule.new(name, components).tap{ |r| r.location = @name }
     end
 
-    def _0_components_99914b932bd37a50b983c5e7c90ae93b()
-      []
-    end
-
-    def _1_components_2403a823f1a9854a29da7cf64f191fbe(sequence)
+    def _0_components_2403a823f1a9854a29da7cf64f191fbe(sequence)
       [sequence]
     end
 
-    def _2_components_62da044340939f02b6c0b52917617e17(sequences, sequence)
+    def _1_components_62da044340939f02b6c0b52917617e17(sequences, sequence)
       sequences << sequence
     end
 

@@ -12,19 +12,7 @@ class BisonParser
       return Tokens::ACTIONS
     end
 
-    # skip space
-    while true
-      while (c = self.read) && c =~ /\s/
-      end
-
-      if c == '#'
-        while (char = self.read) && char != "\n"
-        end
-      else
-        break
-      end
-    end
-    
+    c = read_over_whitespace(line_comment_prefix: '#')
     return nil unless c
 
     case c

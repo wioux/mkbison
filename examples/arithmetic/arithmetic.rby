@@ -29,26 +29,10 @@ subtraction :
 
 class Arithmetic
   def lex
-    # skip space
-    while true
-      while (c = self.read) && c =~ /\s/
-      end
-
-      if c == '#'
-        while (char = self.read) && char != "\n"
-        end
-      else
-        break
-      end
-    end
-
+    c = read_over_whitespace
     case c
     when '0'..'9'
-      number = c
-      while (c = self.peak) && ('0'..'9').include?(c)
-        number << self.read
-      end
-
+      number = read_integer(c)
       self.lex_value = number.to_i
       return Tokens::NUMBER
 
@@ -57,8 +41,9 @@ class Arithmetic
 
     when '-'
       return Tokens::OP_MINUS
-    end
 
-    nil
+    else
+      return nil
+    end
   end
 end

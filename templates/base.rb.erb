@@ -14,6 +14,28 @@ class <%= name %>
       @io, @row, @col = io, 1, 0
     end
 
+    def read_over_whitespace(line_comment_prefix: nil)
+      while true
+        while (c = self.read) && c =~ /\s/
+        end
+
+        if line_comment_prefix && c == line_comment_prefix
+          while (char = self.read) && char != "\n"
+          end
+        else
+          break
+        end
+      end
+      c
+    end
+
+    def read_integer(number='')
+      while (c = self.peak) && ('0'..'9').include?(c)
+        number << self.read
+      end
+      number
+    end
+
     def read
       io.read(1).tap do |c|
         if c == "\n"
