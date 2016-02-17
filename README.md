@@ -4,9 +4,10 @@
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
     gem 'mkbison'
+    gem 'rake-compiler'
 
 You'll need to install a GNU Bison version >= 3.0.0 as well, with e.g.:
 
