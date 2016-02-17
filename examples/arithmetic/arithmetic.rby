@@ -11,6 +11,8 @@ arithmetic:
 
 expression :
   NUMBER
+| OP_MINUS NUMBER[x]
+  { -x }
 | addition
 | subtraction
 ;
