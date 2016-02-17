@@ -33,7 +33,7 @@ The gem installs a command `mkbison` which translates `.rby` files into `.y` Bis
 For example, here is a mkbison grammar for parsing very simple arithmetic expressions:
 
 **arithmetic.rby**
-```
+```yacc
 %token NUMBER
 
 %left OP_PLUS
