@@ -39,14 +39,20 @@ token_list :
 token:
   HASH KW_TOKEN IDENTIFIER[name]
   { Bison::Token.new(name) }
-|
+| assoc_token
+| token[token] NUMBER[num]
+  { token.tap{ |t| t.number = num } }
+;
+
+assoc_token:
   HASH KW_LEFT IDENTIFIER[name]
   { Bison::Token.new(name, :left) }
 |
   HASH KW_RIGHT IDENTIFIER[name]
   { Bison::Token.new(name, :right) }
-| token[token] NUMBER[num]
-  { token.tap{ |t| t.number = num } }
+|
+  assoc_token[token] IDENTIFIER[name]
+  { token.tap{ |t| t.names << name } }
 ;
 
 grammar_rules:

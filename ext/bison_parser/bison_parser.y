@@ -89,20 +89,8 @@ token:
   }
 
 |
-  HASH KW_LEFT IDENTIFIER 
-  {
-    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
-    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_1_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
-  }
-
-|
-  HASH KW_RIGHT IDENTIFIER 
-  {
-    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
-    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_2_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
-  }
+  assoc_token
+  { $$ = $1; }
 
 |
   token NUMBER 
@@ -110,7 +98,34 @@ token:
     rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
     rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
     rb_ivar_set(__actions, rb_intern("@num"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
-    $$ = rb_funcall(__actions, rb_intern("_3_token_445055bddb5840e621fa399faa56aefc"), 2, $1, $2);
+    $$ = rb_funcall(__actions, rb_intern("_2_token_445055bddb5840e621fa399faa56aefc"), 2, $1, $2);
+  }
+
+;
+
+assoc_token:
+  HASH KW_LEFT IDENTIFIER 
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_0_assoc_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
+  }
+
+|
+  HASH KW_RIGHT IDENTIFIER 
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@3.first_line), INT2FIX(@3.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_1_assoc_token_f014c38ad08ecac5d62c0e3fa23163b3"), 1, $3);
+  }
+
+|
+  assoc_token IDENTIFIER 
+  {
+    rb_ivar_set(__actions, rb_intern("@_"), rb_ary_new3(2, INT2FIX(@$.first_line), INT2FIX(@$.first_column)));
+    rb_ivar_set(__actions, rb_intern("@token"), rb_ary_new3(2, INT2FIX(@1.first_line), INT2FIX(@1.first_column)));
+    rb_ivar_set(__actions, rb_intern("@name"), rb_ary_new3(2, INT2FIX(@2.first_line), INT2FIX(@2.first_column)));
+    $$ = rb_funcall(__actions, rb_intern("_2_assoc_token_1d82357deb6789321b86aa67cf1f1cf6"), 2, $1, $2);
   }
 
 ;

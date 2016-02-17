@@ -12,7 +12,7 @@ module Bison
 
     def validate
       errors = []
-      symbols = tokens.map(&:name) + rules.map(&:name)
+      symbols = tokens.map(&:names).flatten + rules.map(&:name)
       rules.map(&:components).flatten.map(&:elements).flatten.each do |el|
         unless !(Bison::Nonterminal === el) || symbols.include?(el.name)
           errors << "#{el.location.join('.')}: #{el.name} is not defined"

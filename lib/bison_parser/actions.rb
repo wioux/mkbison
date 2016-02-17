@@ -26,16 +26,20 @@ class BisonParser
       Bison::Token.new(name)
     end
 
-    def _1_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
+    def _2_token_445055bddb5840e621fa399faa56aefc(token, num)
+      token.tap{ |t| t.number = num }
+    end
+
+    def _0_assoc_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
       Bison::Token.new(name, :left)
     end
 
-    def _2_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
+    def _1_assoc_token_f014c38ad08ecac5d62c0e3fa23163b3(name)
       Bison::Token.new(name, :right)
     end
 
-    def _3_token_445055bddb5840e621fa399faa56aefc(token, num)
-      token.tap{ |t| t.number = num }
+    def _2_assoc_token_1d82357deb6789321b86aa67cf1f1cf6(token, name)
+      token.tap{ |t| t.names << name }
     end
 
     def _0_grammar_rules_99914b932bd37a50b983c5e7c90ae93b()
