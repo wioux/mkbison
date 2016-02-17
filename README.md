@@ -32,7 +32,7 @@ The gem installs a command `mkbison` which translates `.rby` files into `.y` Bis
 
 For example, here is a mkbison grammar for parsing very simple arithmetic expressions:
 
-arithmetic.rby
+**arithmetic.rby**
 ```
 %token NUMBER
 
@@ -101,7 +101,7 @@ class Arithmetic
 end
 ```
 
-To generate a parser from it, run
+To translate it into a Bison grammar file, run
 
     $ bundle exec mkbison -n Arithmetic -o . arithmetic.rby
     $ rake compile
