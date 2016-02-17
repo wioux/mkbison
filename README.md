@@ -110,7 +110,6 @@ This will generate and build a native extension named `arithmetic` in the curren
 
 ## TODO
   * Automatically create Rakefile task
-  * Change the parsers initialize() behavior (don't assume argument is file path)
 
   * Seems like you can hit EOF in the middle of action block and get wrong error msg
   * Benchmark -- what takes so long on the koa grammar?

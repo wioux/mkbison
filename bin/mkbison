@@ -39,7 +39,7 @@ options.name or abort(opts.help)
 options.output or abort(opts.help)
 
 begin
-  bison = BisonParser.new(grammar_file).parse
+  bison = BisonParser.new(File.open(grammar_file, 'r')).parse
 rescue BisonParser::Error => e
   abort(e.message)
 end
