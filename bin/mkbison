@@ -17,6 +17,7 @@ def underscore(name)
 end
 
 options = OpenStruct.new
+options.output = '.'
 
 opts = OptionParser.new do |opts|
   opts.banner += ' grammar_file'
