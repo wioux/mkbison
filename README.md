@@ -108,6 +108,19 @@ To translate it into a Bison grammar file, run
 
 This will generate and build a native extension named `arithmetic` in the current directory. A class named `Arithmetic` exposes the grammar parser. We can perform calculations now with `Arithmetic.new(expression).parse` which will return the result (or raise an exception if a syntax error is encountered).
 
+## TODO
+  * mkbison should fail if bison is not installed
+  * Support multiple tokens on %left/%right lines, for same precedence
+  * Automatically create Rakefile task
+  * Change the parsers initialize() behavior (don't assume argument is file path)
+
+  * Seems like you can hit EOF in the middle of action block and get wrong error msg
+  * Benchmark -- what takes so long on the koa grammar?
+  * Write to temp files, then move them into place
+  * Move base module into the c extension and document the lexing helpers
+
+Not all Bison features are supported yet.
+
 ## Contributing
 
 1. Fork it ( https://github.com/wioux/mkbison )

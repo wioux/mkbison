@@ -1,5 +1,0 @@
-  * Seems like you can hit EOF in the middle of action block and get wrong error msg
-  * Benchmark -- what takes so long on koa?
-  * Support multiple tokens on %left/%right lines, for same precedence
-  * Write to temp file, then move into place
-  * Move base module into the c extension
