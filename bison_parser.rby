@@ -68,8 +68,7 @@ grammar_rule:
 ;
 
 components:
-  { [] }
-| sequence[sequence]
+  sequence[sequence]
   { [sequence] }
 |
   components[sequences] PIPE sequence[sequence]
