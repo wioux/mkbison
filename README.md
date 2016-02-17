@@ -133,6 +133,7 @@ Once we have that, we can compile our extension simply by running
 
 ## TODO
   * Add tests
+  * Support string/character literals in grammar rules
   * Automatically create Rakefile task
   * Write to temp files, then move them into place
   * Move base module into the c extension and document the lexing helpers
